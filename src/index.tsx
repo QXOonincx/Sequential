@@ -1,5 +1,5 @@
-// src/HomePage.tsx
 import React from "react";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 type NavLink = {
@@ -9,7 +9,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
+  { label: "Process", href: "/process" },
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
@@ -27,11 +27,17 @@ const HomePage: React.FC = () => {
           </div>
 
           <nav className="sq-nav">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="sq-nav-link">
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.href.startsWith("/") ? (
+                <Link key={link.href} to={link.href} className="sq-nav-link">
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} className="sq-nav-link">
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
 
           <a href="#contact" className="sq-nav-cta">
@@ -47,8 +53,7 @@ const HomePage: React.FC = () => {
             <div className="sq-hero-text">
               <p className="sq-kicker">Web agency for growing businesses</p>
               <h1>
-                Websites that look{" "}
-                <span className="sq-highlight">clean</span> and convert.
+                Websites that look <span className="sq-highlight">clean</span> and convert.
               </h1>
               <p className="sq-hero-subtitle">
                 Sequantial builds fast, modern websites for companies that want
@@ -150,53 +155,6 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Process */}
-        <section id="process" className="sq-section">
-          <div className="sq-container">
-            <div className="sq-section-header">
-              <h2>How we work</h2>
-              <p>
-                A clear, simple process with regular check-ins so you always
-                know what happens next.
-              </p>
-            </div>
-
-            <ol className="sq-steps">
-              <li className="sq-step">
-                <span className="sq-step-number">1</span>
-                <div>
-                  <h3>Discovery & requirements</h3>
-                  <p>
-                    We learn about your business, target audience, and goals.
-                    Together we define pages, features, and style direction.
-                  </p>
-                </div>
-              </li>
-              <li className="sq-step">
-                <span className="sq-step-number">2</span>
-                <div>
-                  <h3>Design & content</h3>
-                  <p>
-                    We prepare wireframes and visual design. You give feedback,
-                    we refine. If needed, we help with content structure and
-                    copy.
-                  </p>
-                </div>
-              </li>
-              <li className="sq-step">
-                <span className="sq-step-number">3</span>
-                <div>
-                  <h3>Development & launch</h3>
-                  <p>
-                    We build the website, test it on modern browsers and
-                    devices, and support you with launch and hand-off.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-        </section>
-
         {/* Work */}
         <section id="work" className="sq-section sq-section-alt">
           <div className="sq-container">
@@ -276,10 +234,7 @@ const HomePage: React.FC = () => {
                 a rough timeline, and a price range.
               </p>
               <p className="sq-contact-note">
-                Prefer email? Reach us at{" "}
-                <a href="mailto:hello@sequantial.com">
-                  hello@sequantial.com
-                </a>
+                Prefer email? Reach us at <a href="mailto:hello@sequantial.com">hello@sequantial.com</a>
               </p>
             </div>
 
@@ -287,50 +242,32 @@ const HomePage: React.FC = () => {
               className="sq-form"
               onSubmit={(event) => {
                 event.preventDefault();
-                alert(
-                  "Form submit handler is not connected yet. Hook this up to your backend or form service."
-                );
+                alert("Form submit handler is not connected yet.");
               }}
             >
               <div className="sq-form-row">
                 <label>
                   Name
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                    required
-                  />
+                  <input type="text" name="name" placeholder="Your name" required />
                 </label>
               </div>
               <div className="sq-form-row">
                 <label>
                   Company
-                  <input
-                    type="text"
-                    name="company"
-                    placeholder="Your company"
-                  />
+                  <input type="text" name="company" placeholder="Your company" />
                 </label>
               </div>
               <div className="sq-form-row">
                 <label>
                   Email
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="you@company.com"
-                    required
-                  />
+                  <input type="email" name="email" placeholder="you@company.com" required />
                 </label>
               </div>
               <div className="sq-form-row">
                 <label>
                   Budget (optional)
                   <select name="budget" defaultValue="">
-                    <option value="" disabled>
-                      Select a range
-                    </option>
+                    <option value="" disabled>Select a range</option>
                     <option value="2-5k">€2k – €5k</option>
                     <option value="5-10k">€5k – €10k</option>
                     <option value="10-20k">€10k – €20k</option>
@@ -341,12 +278,7 @@ const HomePage: React.FC = () => {
               <div className="sq-form-row">
                 <label>
                   Project details
-                  <textarea
-                    name="details"
-                    rows={4}
-                    placeholder="Tell us about your company, your goals, and what you need."
-                    required
-                  />
+                  <textarea name="details" rows={4} placeholder="Tell us about your company, your goals, and what you need." required />
                 </label>
               </div>
               <button type="submit" className="sq-btn sq-btn-primary sq-btn-full">
@@ -361,9 +293,7 @@ const HomePage: React.FC = () => {
       <footer className="sq-footer">
         <div className="sq-container sq-footer-inner">
           <p>© {new Date().getFullYear()} Sequantial. All rights reserved.</p>
-          <p className="sq-footer-secondary">
-            Websites for businesses that want to grow.
-          </p>
+          <p className="sq-footer-secondary">Websites for businesses that want to grow.</p>
         </div>
       </footer>
     </div>

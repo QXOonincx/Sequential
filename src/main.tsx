@@ -1,11 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-// import App from './App.tsx'
-import HomePage from './index.tsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./index";
+import Process from "./process";
+import "./index.css";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <HomePage />
-  </StrictMode>,
-)
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/process" element={<Process />} />
+      </Routes>
+    </Router>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(<App />);
