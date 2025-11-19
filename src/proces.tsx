@@ -20,32 +20,42 @@ const Process: React.FC = () => {
       <main>
         <section className="sq-section">
           <div className="sq-container">
-            <Link to="/">← Back to Home</Link>
+            <Link to="/">← Terug naar Home</Link>
             <div className="sq-section-header">
-              <h2>How we work</h2>
-              <p>A clear, simple process with regular check-ins so you always know what happens next.</p>
+              <h2>Hoe wij werken</h2>
+              <p>
+                Een helder en eenvoudig proces met regelmatige check-ins, zodat je altijd weet wat de volgende stap is.
+              </p>
             </div>
 
             <ol className="sq-steps">
               <li className="sq-step">
                 <span className="sq-step-number">1</span>
                 <div>
-                  <h3>Discovery & requirements</h3>
-                  <p>We learn about your business, target audience, and goals. Together we define pages, features, and style direction.</p>
+                  <h3>Ontdekking & requirements</h3>
+                  <p>
+                    We leren jouw bedrijf, doelgroep en doelen kennen. Samen bepalen we pagina’s, functionaliteiten en stijlrichting.
+                  </p>
                 </div>
               </li>
+
               <li className="sq-step">
                 <span className="sq-step-number">2</span>
                 <div>
                   <h3>Design & content</h3>
-                  <p>We prepare wireframes and visual design. You give feedback, we refine. If needed, we help with content structure and copy.</p>
+                  <p>
+                    We maken wireframes en visueel ontwerp. Jij geeft feedback, wij verfijnen. Indien gewenst helpen we ook met contentstructuur en copywriting.
+                  </p>
                 </div>
               </li>
+
               <li className="sq-step">
                 <span className="sq-step-number">3</span>
                 <div>
                   <h3>Development & launch</h3>
-                  <p>We build the website, test it on modern browsers and devices, and support you with launch and hand-off.</p>
+                  <p>
+                    We bouwen de website, testen deze op moderne browsers en apparaten, en ondersteunen je bij de lancering en overdracht.
+                  </p>
                 </div>
               </li>
             </ol>

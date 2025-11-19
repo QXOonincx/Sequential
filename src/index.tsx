@@ -101,6 +101,9 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
+        {/* Process section added to homepage */}
+        
+
         {/* Services */}
         <section id="services" className="sq-section sq-section-alt">
           <div className="sq-container">
@@ -117,7 +120,7 @@ const HomePage: React.FC = () => {
                 <h3>Company websites</h3>
                 <p>
                   Professional, modern websites that clearly explain who you
-                  are, what you do, and why you&apos;re different.
+                  are, what you do, and why you're different.
                 </p>
                 <ul className="sq-card-list">
                   <li>Custom layouts & messaging</li>
@@ -151,6 +154,44 @@ const HomePage: React.FC = () => {
                   <li>Content restructuring</li>
                 </ul>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Process section added to homepage */}
+        <section id="process" className="sq-section">
+          <div className="sq-container">
+            <div className="sq-section-header">
+              <h2>Ons proces</h2>
+              <p>Een helder en eenvoudig traject, zodat je altijd weet wat de volgende stap is.</p>
+            </div>
+
+            <ol className="sq-steps sq-steps-small">
+              <li className="sq-step">
+                <span className="sq-step-number">1</span>
+                <div>
+                  <h3>Ontdekking & requirements</h3>
+                  <p>We leren jouw bedrijf, doelen en wensen kennen en bepalen samen de projectomvang.</p>
+                </div>
+              </li>
+              <li className="sq-step">
+                <span className="sq-step-number">2</span>
+                <div>
+                  <h3>Design & content</h3>
+                  <p>Wireframes, visuele richting en contentstructuur worden uitgewerkt.</p>
+                </div>
+              </li>
+              <li className="sq-step">
+                <span className="sq-step-number">3</span>
+                <div>
+                  <h3>Development & launch</h3>
+                  <p>We bouwen, testen en lanceren de website op een soepele manier.</p>
+                </div>
+              </li>
+            </ol>
+
+            <div className="sq-process-cta" style={{ marginTop: "2rem" }}>
+              <Link to="/process" className="sq-btn sq-btn-primary">Bekijk het volledige proces</Link>
             </div>
           </div>
         </section>
@@ -206,7 +247,7 @@ const HomePage: React.FC = () => {
             <div>
               <h2>About Sequantial</h2>
               <p>
-                We&apos;re a small team focused on one thing: building websites
+                We're a small team focused on one thing: building websites
                 that actually help your business. No buzzwords, no over-complex
                 systems—just clear structure, thoughtful design, and solid
                 implementation.
@@ -230,7 +271,7 @@ const HomePage: React.FC = () => {
             <div>
               <h2>Tell us about your project</h2>
               <p>
-                Share a few details and we&apos;ll get back to you with ideas,
+                Share a few details and we'll get back to you with ideas,
                 a rough timeline, and a price range.
               </p>
               <p className="sq-contact-note">
