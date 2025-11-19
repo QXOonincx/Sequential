@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./index";
-import Process from "./proces";
 import ServicesSection from "./onze-diensten"
-import Process from "./process";
+import Process from "./proces";
 
 import "./index.css";
 

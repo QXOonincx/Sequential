@@ -15,8 +15,6 @@ const Process: React.FC = () => {
         <section className="sq-section">
           <div className="sq-container">
 
-            <Link to="/">← Terug naar Home</Link>
-
             <div className="sq-section-header">
               <h2>Hoe wij werken</h2>
               <p>

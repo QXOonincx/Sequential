@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.css";
+import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 
 const HomePage: React.FC = () => {
