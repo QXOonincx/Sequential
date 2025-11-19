@@ -1,26 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
+import NavBar from "./NavBar";
 
 const Process: React.FC = () => {
   return (
     <div className="sq-root">
-      <header className="sq-header">
-        <div className="sq-container sq-header-inner">
-          <div className="sq-logo">
-            <span className="sq-logo-mark">S</span>
-            <span className="sq-logo-text">Sequantial</span>
-          </div>
-          <nav className="sq-nav">
-            <Link to="/" className="sq-nav-link">Home</Link>
-          </nav>
-        </div>
-      </header>
+
+      <NavBar />
+
+      <Link to="/" className="sq-nav-link">Home</Link>
 
       <main>
         <section className="sq-section">
           <div className="sq-container">
+
             <Link to="/">← Terug naar Home</Link>
+
             <div className="sq-section-header">
               <h2>Hoe wij werken</h2>
               <p>

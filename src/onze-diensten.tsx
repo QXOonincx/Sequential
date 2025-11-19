@@ -1,22 +1,15 @@
 import React from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 export const ServicesSection: React.FC = () => (
-  <section id="services" className="sq-section sq-section-alt">
-    <header className="sq-header">
-      <div className="sq-container sq-header-inner">
-        <div className="sq-logo">
-          <span className="sq-logo-mark">S</span>
-          <span className="sq-logo-text">Sequantial</span>
-        </div>
-        <nav className="sq-nav">
-          <Link to="/" className="sq-nav-link">Home</Link>
-        </nav>
-      </div>
-    </header>
 
+    <div className="sq-root">
+        <NavBar />
+        <Link to="/" className="sq-nav-link">Home</Link>
     <div className="sq-container">
+
       <div className="sq-section-header">
         <h2>Diensten</h2>
         <p>
@@ -66,7 +59,7 @@ export const ServicesSection: React.FC = () => (
         </div>
       </div>
     </div>
-  </section>
+    </div>
 );
 
 export default ServicesSection;
