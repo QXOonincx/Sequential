@@ -9,10 +9,10 @@ type NavLink = {
 };
 
 const navLinks: NavLink[] = [
-  { label: "Services", href: "/onze-diensten" },
-  { label: "Process", href: "/process" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "/" },
+  { label: "Diensten", href: "/onze-diensten" },
+  { label: "Proces", href: "/process" },
+  { label: "Over ons", href: "/over-ons" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
       <div className="sq-container sq-header-inner">
         <div className="sq-logo">
           <span className="sq-logo-mark">S</span>
-          <span className="sq-logo-text">Sequantial</span>
+          <span className="sq-logo-text">Sequential</span>
         </div>
 
         <nav className="sq-nav">
@@ -40,7 +40,7 @@ const NavBar: React.FC = () => {
         </nav>
 
         <a href="#contact" className="sq-nav-cta">
-          Get a quote
+          Vraag offerte aan
         </a>
       </div>
     </header>

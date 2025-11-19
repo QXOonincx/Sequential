@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./index.css";
 import NavBar from "./NavBar";
 
@@ -8,11 +7,7 @@ const Process: React.FC = () => {
     <div className="sq-root">
 
       <NavBar />
-
-      <Link to="/" className="sq-nav-link">Home</Link>
-
       <main>
-        <section className="sq-section">
           <div className="sq-container">
 
             <div className="sq-section-header">
@@ -54,7 +49,6 @@ const Process: React.FC = () => {
               </li>
             </ol>
           </div>
-        </section>
       </main>
     </div>
   );

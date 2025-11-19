@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./index";
 import ServicesSection from "./onze-diensten"
 import Process from "./proces";
+import AboutSection from "./over-ons";
 
 import "./index.css";
 
@@ -12,6 +13,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/over-ons" element={<AboutSection />} />
         <Route path="/onze-diensten" element={< ServicesSection/>} />
         <Route path="/process" element={<Process />} />
       </Routes>
