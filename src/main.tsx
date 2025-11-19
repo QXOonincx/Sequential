@@ -3,6 +3,9 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./index";
 import Process from "./proces";
+import ServicesSection from "./onze-diensten"
+import Process from "./process";
+
 import "./index.css";
 
 const App: React.FC = () => {
@@ -10,6 +13,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/onze-diensten" element={< ServicesSection/>} />
         <Route path="/process" element={<Process />} />
       </Routes>
     </Router>
