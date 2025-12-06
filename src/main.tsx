@@ -8,7 +8,7 @@ import AboutSection from "./over-ons";
 import ContactSection from "./contact";
 import "./i18n";
 
-import "./index.css";
+import "./CSS/index.css";
 
 const App: React.FC = () => {
   return (

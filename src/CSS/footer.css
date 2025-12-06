@@ -1,0 +1,14 @@
+.sq-footer {
+  border-top: 1px solid rgba(15, 23, 42, 0.9);
+  padding: 1.5rem 0 2rem;
+  background: radial-gradient(circle at top, #020617, #020617 50%, #000 100%);
+}
+
+.sq-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--sq-muted);
+}

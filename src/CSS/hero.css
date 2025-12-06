@@ -1,0 +1,101 @@
+.sq-hero {
+  padding: 4rem 0 3rem;
+}
+
+.sq-hero-grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.sq-hero-text h1 {
+  font-size: clamp(2.25rem, 4vw, 3.1rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.sq-kicker {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--sq-muted);
+  margin-bottom: 0.6rem;
+}
+
+.sq-highlight {
+  background: linear-gradient(to right, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.sq-hero-subtitle {
+  color: var(--sq-muted);
+  max-width: 32rem;
+}
+
+.sq-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 1.6rem 0 1.8rem;
+}
+
+/* Hero metrics */
+
+.sq-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  font-size: 0.85rem;
+}
+
+.sq-hero-meta-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sq-hero-meta-label {
+  color: var(--sq-muted);
+}
+
+/* Hero side card */
+
+.sq-hero-card {
+  background: radial-gradient(circle at top left, #111827, #020617);
+  border-radius: var(--sq-radius-xl);
+  padding: 1.5rem 1.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: var(--sq-shadow-soft);
+}
+
+.sq-hero-card-title {
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+}
+
+.sq-hero-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--sq-muted);
+  font-size: 0.9rem;
+}
+
+.sq-hero-card-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--sq-muted);
+}
+
+/* Hero responsive */
+
+@media (min-width: 768px) {
+  .sq-hero-grid {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .sq-hero {
+    padding-top: 2.8rem;
+  }
+}

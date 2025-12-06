@@ -1,0 +1,150 @@
+.sq-section-alt {
+  background: radial-gradient(circle at top, #020617, #020617 50%, #000 100%);
+}
+
+.sq-section {
+  padding: 4rem 0;
+}
+
+.sq-section-header {
+  max-width: 36rem;
+  margin-bottom: 2.2rem;
+}
+
+.sq-section-header h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.sq-section-header p {
+  color: var(--sq-muted);
+}
+
+/* Cards / grid */
+
+.sq-grid-3 {
+  box-shadow: var(--sq-shadow-soft);
+  display: grid;
+  gap: 1.6rem;
+}
+
+.sq-card {
+  background: var(--sq-card);
+  border-radius: var(--sq-radius-lg);
+  padding: 1.4rem 1.3rem;
+  border: 1px solid rgba(30, 64, 175, 0.8);
+}
+
+.sq-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.sq-card p {
+  color: var(--sq-muted);
+  font-size: 0.9rem;
+}
+
+.sq-card-list {
+  margin-top: 0.75rem;
+  padding-left: 1.2rem;
+  color: var(--sq-muted);
+  font-size: 0.85rem;
+}
+
+/* Steps */
+
+.sq-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.sq-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.sq-step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.sq-step h3 {
+  margin: 0 0 0.25rem;
+}
+
+.sq-step p {
+  margin: 0;
+  color: var(--sq-muted);
+  font-size: 0.9rem;
+}
+
+/* Projects */
+
+.sq-project {
+  background: var(--sq-card);
+  border-radius: var(--sq-radius-lg);
+  padding: 1.4rem 1.3rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.sq-project-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  margin-bottom: 0.6rem;
+}
+
+.sq-project-type {
+  font-size: 0.8rem;
+  color: var(--sq-muted);
+  margin-top: 0.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.sq-project-text {
+  font-size: 0.9rem;
+  color: var(--sq-muted);
+}
+
+/* About */
+
+.sq-about-grid {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.sq-about-box {
+  background: var(--sq-card);
+  border-radius: var(--sq-radius-lg);
+  padding: 1.4rem 1.3rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+/* Responsive grids */
+
+@media (min-width: 768px) {
+  .sq-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sq-about-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  }
+}

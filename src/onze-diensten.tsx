@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css";
+import "./CSS/index.css";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import { useTranslation } from "react-i18next";

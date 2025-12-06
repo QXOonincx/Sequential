@@ -1,4 +1,4 @@
-import "./index.css";
+import "./CSS/index.css";
 import NavBar from "./NavBar";
 import React from "react";
 import { useTranslation } from "react-i18next";

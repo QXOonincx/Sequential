@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./index.css";
+import "./CSS/index.css";
 import "./CSS/languageToggle.css";
 
 type NavLink = {
-  labelKey: string; // <- use translation key, not direct text
+  labelKey: string;
   href: string;
 };
 
