@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./CSS/index.css";
-import "./CSS/languageToggle.css";
+
 
 type NavLink = {
   labelKey: string;
@@ -19,9 +19,14 @@ const navLinks: NavLink[] = [
 
 const NavBar: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === "nl" ? "en" : "nl");
+  };
+
+  const toggleMenu = () => {
+    setIsMobileOpen((prev) => !prev);
   };
 
   return (
@@ -32,7 +37,8 @@ const NavBar: React.FC = () => {
           <span className="sq-logo-text">Sequential</span>
         </div>
 
-        <nav className="sq-nav">
+        {/* Desktop navigatie */}
+        <nav className="sq-nav sq-nav-desktop">
           {navLinks.map((link) =>
             link.href.startsWith("/") ? (
               <Link key={link.href} to={link.href} className="sq-nav-link">
@@ -46,20 +52,66 @@ const NavBar: React.FC = () => {
           )}
         </nav>
 
-        {/* CTA Button */}
-        <Link to="/contact" className="sq-nav-cta">
-          {t("nav.quote")}
-        </Link>
+        {/* Rechterkant: CTA, taal-knop, hamburger */}
+        <div className="sq-header-actions">
+          <Link to="/contact" className="sq-nav-cta sq-nav-cta-desktop">
+            {t("nav.quote")}
+          </Link>
 
-        {/* Language Switcher */}
-        <button
-          className={`sq-lang-btn ${i18n.language}`}
-          onClick={toggleLanguage}
-          style={{ marginLeft: "1rem" }}
-        >
-          {i18n.language.toUpperCase()}
-        </button>
+          <button
+            className={`sq-lang-btn ${i18n.language}`}
+            onClick={toggleLanguage}
+          >
+            {i18n.language.toUpperCase()}
+          </button>
+
+          {/* Hamburger knop (alleen zichtbaar op mobiel in CSS) */}
+          <button
+            className={`sq-nav-toggle ${isMobileOpen ? "is-open" : ""}`}
+            onClick={toggleMenu}
+            aria-label="Menu openen of sluiten"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
+
+      {/* Mobiel menu – verschijnt onder de header */}
+      {isMobileOpen && (
+        <nav className="sq-nav-mobile">
+          {navLinks.map((link) =>
+            link.href.startsWith("/") ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="sq-nav-link"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                {t(link.labelKey)}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="sq-nav-link"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                {t(link.labelKey)}
+              </a>
+            )
+          )}
+
+          <Link
+            to="/contact"
+            className="sq-nav-cta sq-nav-cta-mobile"
+            onClick={() => setIsMobileOpen(false)}
+          >
+            {t("nav.quote")}
+          </Link>
+        </nav>
+      )}
     </header>
   );
 };

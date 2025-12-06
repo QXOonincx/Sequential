@@ -46,6 +46,8 @@
   font-size: 1rem;
 }
 
+/* Desktop nav */
+
 .sq-nav {
   display: flex;
   gap: 1rem;
@@ -81,14 +83,109 @@
   box-shadow: 0 1px 8px rgba(15, 23, 42, 0.281);
 }
 
-/* Navbar responsive */
+.sq-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Hamburger knop */
+
+.sq-nav-toggle {
+  display: none; /* wordt op mobiel inline-flex in de media query */
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: rgba(15, 23, 42, 0.9);
+  padding: 0;
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+
+  transition: background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sq-nav-toggle:hover {
+  background: rgba(15, 23, 42, 1);
+  border-color: rgba(56, 189, 248, 0.8);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.sq-nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--sq-text);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease, background 0.2s ease;
+  transform-origin: center;
+}
+
+/* Als open: verander in een "X" */
+
+.sq-nav-toggle.is-open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.sq-nav-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.sq-nav-toggle.is-open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* optioneel: andere kleur als open */
+.sq-nav-toggle.is-open span {
+  background: #38bdf8;
+}
+
+/* Mobiel menu */
+
+.sq-nav-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem 1rem;
+  background: rgba(15, 23, 42, 0.96);
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.sq-nav-mobile .sq-nav-link {
+  padding: 0.5rem 0;
+  display: block;
+}
+
+.sq-nav-cta-mobile {
+  margin-top: 0.4rem;
+}
+
+/* Responsive: onder 768px wordt het hamburger-menu gebruikt */
 
 @media (max-width: 767px) {
-  .sq-header-inner {
-    flex-wrap: wrap;
+  .sq-nav-desktop {
+    display: none; /* verberg gewone nav */
   }
 
-  .sq-nav {
-    display: none;
+  .sq-nav-toggle {
+    display: inline-flex; /* toon hamburger */
+  }
+
+  .sq-nav-cta-desktop {
+    display: none; /* CTA naast logo verbergen */
+  }
+
+  .sq-nav-mobile {
+    display: flex; /* mobiel menu zichtbaar ALS het gerenderd wordt */
+  }
+
+  .sq-header-inner {
+    gap: 0.8rem;
   }
 }
