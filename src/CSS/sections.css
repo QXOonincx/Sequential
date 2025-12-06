@@ -6,6 +6,134 @@
   padding: 4rem 0;
 }
 
+/* ==== Process page ==== */
+
+.sq-process-intro {
+  max-width: 40rem;
+  margin-bottom: 2.5rem;
+  color: var(--sq-muted);
+  font-size: 0.95rem;
+}
+
+.sq-process-steps {
+  gap: 1.8rem;
+}
+
+/* Elke stap als een card */
+
+.sq-process-step {
+  background: var(--sq-card);
+  border-radius: var(--sq-radius-lg);
+  padding: 1.4rem 1.5rem 1.6rem;
+  border: 1px solid rgba(37, 99, 235, 0.6);
+  box-shadow: var(--sq-shadow-soft);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+}
+
+/* Kop van de stap */
+
+.sq-process-step-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 0.3rem;
+}
+
+.sq-process-step-title {
+  margin: 0 0 0.2rem;
+}
+
+.sq-process-step-summary {
+  margin: 0;
+  color: var(--sq-muted);
+  font-size: 0.9rem;
+}
+
+/* Nummer stijlen (iets prominenter) */
+
+.sq-process-step .sq-step-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  background: radial-gradient(circle at 30% 20%, #38bdf8, #4f46e5);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+}
+
+/* Body van de stap */
+
+.sq-process-step-body {
+  margin-left: 2.8rem; /* lijnt tekst uit onder de titel */
+  font-size: 0.9rem;
+  color: var(--sq-muted);
+}
+
+.sq-process-step-body p {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Lijst in de stap */
+
+.sq-process-list-title {
+  font-weight: 500;
+  margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
+  color: var(--sq-text);
+}
+
+.sq-process-list {
+  margin: 0.2rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: var(--sq-muted);
+}
+
+.sq-process-list li + li {
+  margin-top: 0.15rem;
+}
+
+/* Outro blok onderaan */
+
+.sq-process-outro {
+  margin-top: 3rem;
+  max-width: 40rem;
+  padding: 1.4rem 1.5rem;
+  border-radius: var(--sq-radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: radial-gradient(circle at top left, #020617, #020617 60%, #000);
+}
+
+.sq-process-outro h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.sq-process-outro p {
+  margin: 0;
+  color: var(--sq-muted);
+  font-size: 0.9rem;
+}
+
+/* Mobiel tweaks */
+
+@media (max-width: 767px) {
+  .sq-process-step-body {
+    margin-left: 0;
+  }
+
+  .sq-process-step {
+    padding: 1.2rem 1.1rem 1.3rem;
+  }
+}
+
+
 .sq-section-header {
   max-width: 36rem;
   margin-bottom: 2.2rem;

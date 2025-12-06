@@ -42,6 +42,31 @@
   "process.step3.title": "Development & Launch",
   "process.step3.desc": "We build, test, and launch the website smoothly.",
   "process.cta": "View the full process →",
+    "processPage.intro": "On this page you’ll find a more detailed breakdown of how we work together. From the first call to launch: structured, transparent, and without surprises.",
+
+  "processPage.step1.long": "The first phase is all about understanding your business, audience, and goals. We look at what is already working, where the friction is, and what role the new website should play in your marketing and sales. Based on that, we define scope and priorities together.",
+  "processPage.step1.listTitle": "In this phase you can expect:",
+  "processPage.step1.list.1": "An online or in-person kick-off where we discuss your story, goals, and timeline.",
+  "processPage.step1.list.2": "An analysis of your current website (if you have one), competitors, and examples you like.",
+  "processPage.step1.list.3": "A proposal for the website structure (sitemap) and the key pages.",
+  "processPage.step1.list.4": "A clear indication of planning, investment, and milestones so you know exactly what to expect.",
+
+  "processPage.step2.long": "With a clear direction, we move into wireframes, content structure, and visual design. We make sure every page has a logical flow, the right calls-to-action, and a look and feel that fits your brand. You’ll have several moments to give feedback so the end result feels right.",
+  "processPage.step2.listTitle": "What happens in this phase:",
+  "processPage.step2.list.1": "Creating wireframes for key pages with a strong focus on structure and conversion.",
+  "processPage.step2.list.2": "Defining tone of voice and content guidelines for copy and visuals.",
+  "processPage.step2.list.3": "Designing the final pages in your brand style (or a refreshed visual direction).",
+  "processPage.step2.list.4": "Feedback rounds where we fine-tune the details together.",
+
+  "processPage.step3.long": "Once the design is approved, we build the website using modern, fast, and secure technology. We make sure everything works smoothly on mobile, tablet, and desktop, and that key actions are measurable. After launch, we don’t disappear: you’ll get a walkthrough and we’re available for support and further optimization.",
+  "processPage.step3.listTitle": "In the final phase you can expect:",
+  "processPage.step3.list.1": "Technical implementation of the design, including responsive layouts for all screen sizes.",
+  "processPage.step3.list.2": "Baseline SEO (page structure, titles, performance) and integration with tools like Google Analytics.",
+  "processPage.step3.list.3": "Testing of forms, navigation, and key user flows before going live.",
+  "processPage.step3.list.4": "A guided go-live and a short handover so you can make small changes yourself.",
+
+  "processPage.outro.title": "Clear collaboration, no hassle",
+  "processPage.outro.text": "We believe in direct communication, honest timelines, and transparent pricing. You’ll have one main point of contact and always know which phase we’re in, so you can focus on running your business.",
 
   "about.title": "About Sequential",
   "about.text": "We are a small team with one focus: building websites that help your business grow. No buzzwords, no unnecessarily complex systems — just clear structure, thoughtful design, and solid implementation.",
