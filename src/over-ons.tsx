@@ -1,38 +1,32 @@
 import "./index.css";
 import NavBar from "./NavBar";
-
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const AboutSection: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="sq-root">
-        <NavBar />
+      <NavBar />
 
-        <main>
-
-        <div className="sq-container">
-
-      <div className="sq-container sq-about-grid">
-        <div>
-          <h2>Over Sequential</h2>
-          <p>
-            We zijn een klein team met één focus: websites bouwen die je bedrijf helpen
-            groeien. Geen buzzwords, geen onnodig complexe systemen—maar duidelijke
-            structuur, doordacht ontwerp en solide implementatie.
-          </p>
+      <main>
+        <div className="sq-container sq-about-grid">
+          <div>
+            <h2>{t("about.title")}</h2>
+            <p>{t("about.text")}</p>
+          </div>
+          <div className="sq-about-box">
+            <h3>{t("about.why.title")}</h3>
+            <ul className="sq-card-list">
+              <li>{t("about.why.list.1")}</li>
+              <li>{t("about.why.list.2")}</li>
+              <li>{t("about.why.list.3")}</li>
+              <li>{t("about.why.list.4")}</li>
+            </ul>
+          </div>
         </div>
-        <div className="sq-about-box">
-          <h3>Waarom klanten met ons werken</h3>
-          <ul className="sq-card-list">
-            <li>Directe communicatie met de mensen die het werk doen</li>
-            <li>Eerlijke tijdlijnen en transparante prijzen</li>
-            <li>Technische stack afgestemd op jouw behoeften</li>
-            <li>Opties voor langdurige ondersteuning beschikbaar</li>
-          </ul>
-        </div>
-      </div>
-      </div>
-    </main>
+      </main>
     </div>
   );
 };

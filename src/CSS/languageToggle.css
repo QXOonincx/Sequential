@@ -1,0 +1,30 @@
+.sq-lang-btn {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  background: linear-gradient(
+    to right,
+    rgba(56, 189, 248, 0.1),
+    rgba(129, 140, 248, 0.1)
+  );
+  color: var(--sq-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sq-lang-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(56, 189, 248, 0.2);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.sq-lang-btn.active {
+  background: var(--sq-accent);
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+}

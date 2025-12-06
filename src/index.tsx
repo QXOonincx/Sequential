@@ -2,56 +2,50 @@ import React from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
-import AboutSection from "./over-ons";
+import ContactForm from "./ContactForm";
+import { useTranslation, Trans } from "react-i18next";
 
 const HomePage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="sq-root">
-      {/* Top navigatie */}
       <NavBar />
 
       <main>
-        {/* Hero sectie */}
+        {/* Hero */}
         <section className="sq-hero">
           <div className="sq-container sq-hero-grid">
             <div className="sq-hero-text">
-              <p className="sq-kicker">Webbureau voor groeiende bedrijven</p>
+              <p className="sq-kicker">{t("hero.kicker")}</p>
               <h1>
-                Websites die er <span className="sq-highlight">strak</span> uitzien en converteren.
+                <Trans i18nKey="hero.title">
+                  Websites die er <span className="sq-highlight">strak</span> uitzien en converteren.
+                </Trans>
               </h1>
-              <p className="sq-hero-subtitle">
-                Sequential bouwt snelle, moderne websites voor bedrijven die
-                meer leads, sterkere branding en een betere online ervaring willen.
-              </p>
+              <p className="sq-hero-subtitle">{t("hero.subtitle")}</p>
 
               <div className="sq-hero-actions">
-                <a href="#contact" className="sq-btn sq-btn-primary">
-                  Plan een gratis gesprek
-                </a>
-                <a href="#work" className="sq-btn sq-btn-ghost">
-                  Bekijk recente projecten
-                </a>
+                <a href="#contact" className="sq-btn sq-btn-primary">{t("hero.cta1")}</a>
+                <a href="#work" className="sq-btn sq-btn-ghost">{t("hero.cta2")}</a>
               </div>
 
               <div className="sq-hero-meta">
                 <div>
-                  <p className="sq-hero-meta-number">2–4 weken</p>
-                  <p className="sq-hero-meta-label">Typische levertijd</p>
+                  <p className="sq-hero-meta-number">{t("hero.meta.time")}</p>
+                  <p className="sq-hero-meta-label">{t("hero.meta.label")}</p>
                 </div>
               </div>
             </div>
 
             <div className="sq-hero-card">
-              <p className="sq-hero-card-title">Wat je krijgt met Sequential</p>
+              <p className="sq-hero-card-title">{t("hero.card.title")}</p>
               <ul className="sq-hero-list">
-                <li>Aangepast ontwerp, geen standaard template</li>
-                <li>Responsieve layouts voor mobiel & desktop</li>
-                <li>Snelle laadtijden en SEO-vriendelijke structuur</li>
+                <li>{t("hero.card.list.1")}</li>
+                <li>{t("hero.card.list.2")}</li>
+                <li>{t("hero.card.list.3")}</li>
               </ul>
-              <p className="sq-hero-card-note">
-                Vertel ons over je bedrijf en we stellen een structuur, visuele richting
-                en tijdlijn voor — geheel vrijblijvend.
-              </p>
+              <p className="sq-hero-card-note">{t("hero.card.note")}</p>
             </div>
           </div>
         </section>
@@ -60,185 +54,115 @@ const HomePage: React.FC = () => {
         <section id="services" className="sq-section sq-section-alt">
           <div className="sq-container">
             <div className="sq-section-header">
-              <h2>Diensten</h2>
-              <p>
-                Van eerste concept tot livegang: wij verzorgen elke stap van je website,
-                zodat jij je kunt richten op je bedrijf.
-              </p>
+              <h2>{t("services.title")}</h2>
+              <p>{t("services.subtitle")}</p>
             </div>
 
             <div className="sq-grid-3">
               <div className="sq-card">
-                <h3>Bedrijfswebsites</h3>
-                <p>
-                  Professionele, moderne websites die helder uitleggen wie je bent,
-                  wat je doet en waarom je anders bent.
-                </p>
+                <h3>{t("services.cards.business.title")}</h3>
+                <p>Professional, modern websites...</p>
                 <ul className="sq-card-list">
-                  <li>Custom layouts & messaging</li>
-                  <li>Contact- & leadformulieren</li>
-                  <li>Meerdere pagina’s of one-pagers</li>
+                  <li>{t("services.cards.business.list.1")}</li>
+                  <li>{t("services.cards.business.list.2")}</li>
+                  <li>{t("services.cards.business.list.3")}</li>
                 </ul>
               </div>
 
               <div className="sq-card">
-                <h3>Landingspagina’s</h3>
-                <p>
-                    Effectieve landingspagina’s die resultaten leveren voor campagnes,
-                     productlanceringen en promoties.
-                </p>
+                <h3>{t("services.cards.landing.title")}</h3>
+                <p>Effective landing pages...</p>
                 <ul className="sq-card-list">
-                  <li>Conversiegerichte content</li>
-                  <li>Volledige analytics- en tracking-opzet</li>
+                  <li>{t("services.cards.landing.list.1")}</li>
+                  <li>{t("services.cards.landing.list.2")}</li>
                 </ul>
               </div>
 
               <div className="sq-card">
-                <h3>Redesign & optimalisatie</h3>
-                <p>
-                  Al een website? Wij vernieuwen het uiterlijk en verbeteren
-                  prestaties zonder inhoud te verliezen.
-                </p>
+                <h3>{t("services.cards.redesign.title")}</h3>
+                <p>Already have a website?</p>
                 <ul className="sq-card-list">
-                  <li>UX & UI verbeteringen</li>
-                  <li>Snelheids- & SEO-optimalisatie</li>
-                  <li>Herstructurering van content</li>
+                  <li>{t("services.cards.redesign.list.1")}</li>
+                  <li>{t("services.cards.redesign.list.2")}</li>
+                  <li>{t("services.cards.redesign.list.3")}</li>
                 </ul>
               </div>
             </div>
             <br />
-            <Link to="/process" className="sq-btn sq-btn-primary">Lees meer →</Link>
-
+            <Link to="/proces" className="sq-btn sq-btn-primary">{t("services.link")}</Link>
           </div>
         </section>
 
-        {/* Proces sectie */}
+        {/* Process */}
         <section id="process" className="sq-section">
           <div className="sq-container">
             <div className="sq-section-header">
-              <h2>Ons proces</h2>
-              <p>Een helder en eenvoudig traject, zodat je altijd weet wat de volgende stap is.</p>
+              <h2>{t("process.title")}</h2>
+              <p>{t("process.subtitle")}</p>
             </div>
 
             <ol className="sq-steps sq-steps-small">
               <li className="sq-step">
                 <span className="sq-step-number">1</span>
                 <div>
-                  <h3>Ontdekking & requirements</h3>
-                  <p>We leren jouw bedrijf, doelen en wensen kennen en bepalen samen de projectomvang.</p>
+                  <h3>{t("process.step1.title")}</h3>
+                  <p>{t("process.step1.desc")}</p>
                 </div>
               </li>
               <li className="sq-step">
                 <span className="sq-step-number">2</span>
                 <div>
-                  <h3>Design & content</h3>
-                  <p>Wireframes, visuele richting en contentstructuur worden uitgewerkt.</p>
+                  <h3>{t("process.step2.title")}</h3>
+                  <p>{t("process.step2.desc")}</p>
                 </div>
               </li>
               <li className="sq-step">
                 <span className="sq-step-number">3</span>
                 <div>
-                  <h3>Development & lancering</h3>
-                  <p>We bouwen, testen en lanceren de website op een soepele manier.</p>
+                  <h3>{t("process.step3.title")}</h3>
+                  <p>{t("process.step3.desc")}</p>
                 </div>
               </li>
             </ol>
 
             <div className="sq-process-cta" style={{ marginTop: "2rem" }}>
-              <Link to="/process" className="sq-btn sq-btn-primary">Bekijk het volledige proces →</Link>
+              <Link to="/proces" className="sq-btn sq-btn-primary">{t("process.cta")}</Link>
             </div>
           </div>
         </section>
 
-        {/* Over ons */}
+        {/* About */}
         <section id="about" className="sq-section sq-section-alt">
           <div className="sq-container sq-about-grid">
             <div>
-              <h2>Over Sequential</h2>
-              <p>
-                We zijn een klein team met één focus: websites bouwen die je bedrijf helpen
-                groeien. Geen buzzwords, geen onnodig complexe systemen—maar duidelijke
-                structuur, doordacht ontwerp en solide implementatie.
-              </p>
+              <h2>{t("about.title")}</h2>
+              <p>{t("about.text")}</p>
             </div>
             <div className="sq-about-box">
-              <h3>Waarom klanten met ons werken</h3>
+              <h3>{t("about.why.title")}</h3>
               <ul className="sq-card-list">
-                <li>Directe communicatie met de mensen die het werk doen</li>
-                <li>Eerlijke tijdlijnen en transparante prijzen</li>
-                <li>Technische stack afgestemd op jouw behoeften</li>
-                <li>Opties voor langdurige ondersteuning beschikbaar</li>
+                <li>{t("about.why.list.1")}</li>
+                <li>{t("about.why.list.2")}</li>
+                <li>{t("about.why.list.3")}</li>
+                <li>{t("about.why.list.4")}</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Contact / CTA */}
+        {/* Contact */}
         <section id="contact" className="sq-section sq-section-alt">
           <div className="sq-container sq-contact-grid">
             <div>
-              <h2>Vertel ons over je project</h2>
-              <p>
-                Deel enkele details en we komen bij je terug met ideeën,
-                een globale tijdlijn en een prijsindicatie.
-              </p>
+              <h2>{t("contact.title")}</h2>
+              <p>{t("contact.text")}</p>
               <p className="sq-contact-note">
-                Liever mailen? Stuur ons een bericht via <a href="mailto:hello@sequential.com">hello@sequential.com</a>
+                <Trans i18nKey="contact.note">
+                  Liever mailen? Stuur ons een bericht via <a href="mailto:hello@sequential.com">hello@sequential.com</a>
+                </Trans>
               </p>
             </div>
-
-            <form
-              className="sq-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-                alert("Formulierverwerking is nog niet gekoppeld.");
-              }}
-            >
-              <div className="sq-form-row">
-                <label>
-                  Naam
-                  <input type="text" name="name" placeholder="Jouw naam" required />
-                </label>
-              </div>
-              <div className="sq-form-row">
-                <label>
-                  Bedrijf
-                  <input type="text" name="company" placeholder="Jouw bedrijf" />
-                </label>
-              </div>
-              <div className="sq-form-row">
-                <label>
-                  E-mail
-                  <input type="email" name="email" placeholder="jij@bedrijf.com" required />
-                </label>
-              </div>
-              <div className="sq-form-row">
-                <label>
-                  Budget (optioneel)
-                  <select name="budget" defaultValue="">
-                    <option value="" disabled>Kies een range</option>
-                    <option value="2-5k">€2k – €5k</option>
-                    <option value="5-10k">€5k – €10k</option>
-                    <option value="10-20k">€10k – €20k</option>
-                    <option value="20k+">€20k+</option>
-                  </select>
-                </label>
-              </div>
-              <div className="sq-form-row">
-                <label>
-                  Projectdetails
-                  <textarea
-                    name="details"
-                    rows={4}
-                    placeholder="Vertel ons over je bedrijf, je doelen en wat je nodig hebt."
-                    required
-                  />
-                </label>
-              </div>
-              <button type="submit" className="sq-btn sq-btn-primary sq-btn-full">
-                Verstuur bericht
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </section>
       </main>
@@ -246,8 +170,8 @@ const HomePage: React.FC = () => {
       {/* Footer */}
       <footer className="sq-footer">
         <div className="sq-container sq-footer-inner">
-          <p>© {new Date().getFullYear()} Sequential. Alle rechten voorbehouden.</p>
-          <p className="sq-footer-secondary">Websites voor bedrijven die willen groeien.</p>
+          <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
+          <p className="sq-footer-secondary">{t("footer.secondary")}</p>
         </div>
       </footer>
     </div>

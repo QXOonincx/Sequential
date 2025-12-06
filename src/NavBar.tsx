@@ -1,22 +1,29 @@
-// NavBar.tsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./index.css";
+import "./CSS/languageToggle.css";
 
 type NavLink = {
-  label: string;
+  labelKey: string; // <- use translation key, not direct text
   href: string;
 };
 
 const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Diensten", href: "/onze-diensten" },
-  { label: "Proces", href: "/process" },
-  { label: "Over ons", href: "/over-ons" },
-  { label: "Contact", href: "#contact" },
+  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.services", href: "/onze-diensten" },
+  { labelKey: "nav.process", href: "/proces" },
+  { labelKey: "nav.about", href: "/over-ons" },
+  { labelKey: "nav.contact", href: "/contact" },
 ];
 
 const NavBar: React.FC = () => {
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "nl" ? "en" : "nl");
+  };
+
   return (
     <header className="sq-header">
       <div className="sq-container sq-header-inner">
@@ -29,19 +36,29 @@ const NavBar: React.FC = () => {
           {navLinks.map((link) =>
             link.href.startsWith("/") ? (
               <Link key={link.href} to={link.href} className="sq-nav-link">
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ) : (
               <a key={link.href} href={link.href} className="sq-nav-link">
-                {link.label}
+                {t(link.labelKey)}
               </a>
             )
           )}
         </nav>
 
-        <a href="#contact" className="sq-nav-cta">
-          Vraag offerte aan
-        </a>
+        {/* CTA Button */}
+        <Link to="/contact" className="sq-nav-cta">
+          {t("nav.quote")}
+        </Link>
+
+        {/* Language Switcher */}
+        <button
+          className={`sq-lang-btn ${i18n.language}`}
+          onClick={toggleLanguage}
+          style={{ marginLeft: "1rem" }}
+        >
+          {i18n.language.toUpperCase()}
+        </button>
       </div>
     </header>
   );

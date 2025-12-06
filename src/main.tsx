@@ -5,6 +5,8 @@ import HomePage from "./index";
 import ServicesSection from "./onze-diensten"
 import Process from "./proces";
 import AboutSection from "./over-ons";
+import ContactSection from "./contact";
+import "./i18n";
 
 import "./index.css";
 
@@ -15,7 +17,8 @@ const App: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/over-ons" element={<AboutSection />} />
         <Route path="/onze-diensten" element={< ServicesSection/>} />
-        <Route path="/process" element={<Process />} />
+        <Route path="/proces" element={<Process />} />
+        <Route path="/contact" element={<ContactSection />} />
       </Routes>
     </Router>
   );
