@@ -56,6 +56,8 @@
 .sq-process-step .sq-step-number {
   width: 34px;
   height: 34px;
+  min-width: 34px;
+  min-height: 34px;
   border-radius: 999px;
   border: 1px solid rgba(56, 189, 248, 0.8);
   display: inline-flex;

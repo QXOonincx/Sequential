@@ -27,7 +27,8 @@ const HomePage: React.FC = () => {
 
               <div className="sq-hero-actions">
                 <a href="#contact" className="sq-btn sq-btn-primary">{t("hero.cta1")}</a>
-                <a href="#work" className="sq-btn sq-btn-ghost">{t("hero.cta2")}</a>
+                {/* <a href="#work" className="sq-btn sq-btn-ghost">{t("hero.cta2")}</a> */}
+                {/* deze a tag hierboven kunnen we uncommenten zodra we echt projecten hebben die we kunnen laten zien */}
               </div>
 
               <div className="sq-hero-meta">
@@ -89,7 +90,7 @@ const HomePage: React.FC = () => {
               </div>
             </div>
             <br />
-            <Link to="/proces" className="sq-btn sq-btn-primary">{t("services.link")}</Link>
+            <Link to="/onze-diensten" className="sq-btn sq-btn-primary">{t("services.link")}</Link>
           </div>
         </section>
 
@@ -137,7 +138,12 @@ const HomePage: React.FC = () => {
             <div>
               <h2>{t("about.title")}</h2>
               <p>{t("about.text")}</p>
+              
+              <div className="sq-process-cta" style={{ marginTop: "2rem" }}>
+                <Link to="/over-ons" className="sq-btn sq-btn-primary">{t("about.why.link")}</Link>
+              </div>
             </div>
+
             <div className="sq-about-box">
               <h3>{t("about.why.title")}</h3>
               <ul className="sq-card-list">
