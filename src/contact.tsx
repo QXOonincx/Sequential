@@ -3,12 +3,24 @@ import "./CSS/index.css";
 import NavBar from "./NavBar";
 import ContactForm from "./ContactForm";
 import { useTranslation, Trans } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export const ContactSection: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
+      <Helmet>
+        <title>{t("seo.contact.title", "Contact — Sequential")}</title>
+        <meta
+          name="description"
+          content={t(
+            "seo.contact.description",
+            "Neem contact op met Sequential voor een vrijblijvende offerte of advies over je website. We reageren snel."
+          )}
+        />
+      </Helmet>
+
       <NavBar />
 
       <main>

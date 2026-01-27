@@ -2,12 +2,24 @@ import React from "react";
 import "./CSS/index.css";
 import NavBar from "./NavBar";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const OnzeDiensten: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
+      <Helmet>
+        <title>{t("seo.services.title", "Onze diensten — Sequential")}</title>
+        <meta
+          name="description"
+          content={t(
+            "seo.services.description",
+            "Bekijk onze diensten: websites, landingpages en redesigns. Snelle, moderne websites die er strak uitzien en converteren."
+          )}
+        />
+      </Helmet>
+
       <NavBar />
 
       <main>
@@ -20,9 +32,7 @@ const OnzeDiensten: React.FC = () => {
             </div>
 
             {/* Intro */}
-            <p className="sq-process-intro">
-              {t("services.intro")}
-            </p>
+            <p className="sq-process-intro">{t("services.intro")}</p>
 
             {/* Diensten als steps/cards */}
             <ol className="sq-steps sq-process-steps">
@@ -43,9 +53,7 @@ const OnzeDiensten: React.FC = () => {
                 <div className="sq-process-step-body">
                   <p>{t("services.service1.text")}</p>
 
-                  <p className="sq-process-list-title">
-                    {t("services.includes")}
-                  </p>
+                  <p className="sq-process-list-title">{t("services.includes")}</p>
                   <ul className="sq-process-list">
                     <li>{t("services.service1.list.1")}</li>
                     <li>{t("services.service1.list.2")}</li>
@@ -71,9 +79,7 @@ const OnzeDiensten: React.FC = () => {
                 <div className="sq-process-step-body">
                   <p>{t("services.service2.text")}</p>
 
-                  <p className="sq-process-list-title">
-                    {t("services.includes")}
-                  </p>
+                  <p className="sq-process-list-title">{t("services.includes")}</p>
                   <ul className="sq-process-list">
                     <li>{t("services.service2.list.1")}</li>
                     <li>{t("services.service2.list.2")}</li>
@@ -99,9 +105,7 @@ const OnzeDiensten: React.FC = () => {
                 <div className="sq-process-step-body">
                   <p>{t("services.service3.text")}</p>
 
-                  <p className="sq-process-list-title">
-                    {t("services.includes")}
-                  </p>
+                  <p className="sq-process-list-title">{t("services.includes")}</p>
                   <ul className="sq-process-list">
                     <li>{t("services.service3.list.1")}</li>
                     <li>{t("services.service3.list.2")}</li>

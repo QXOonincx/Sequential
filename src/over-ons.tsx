@@ -2,15 +2,28 @@ import "./CSS/index.css";
 import NavBar from "./NavBar";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const AboutSection: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
+      <Helmet>
+        <title>{t("seo.about.title", "Over ons — Sequential")}</title>
+        <meta
+          name="description"
+          content={t(
+            "seo.about.description",
+            "Lees meer over Sequential: onze missie, visie en kernwaarden. Wij bouwen snelle, moderne websites die converteren."
+          )}
+        />
+      </Helmet>
+
       <NavBar />
+
       <main>
-        <section className="sq-section sq-process"> {/* same style as process */}
+        <section className="sq-section sq-process">
           <div className="sq-container">
 
             {/* Section Header */}
@@ -53,7 +66,7 @@ const AboutSection: React.FC = () => {
                   </div>
                 </div>
                 <div className="sq-process-step-body">
-                  <p>{t("about.why.long")}</p> {/* optional longer explanation */}
+                  <p>{t("about.why.long")}</p>
                   <ul className="sq-process-list">
                     <li>{t("about.why.list.1")}</li>
                     <li>{t("about.why.list.2")}</li>

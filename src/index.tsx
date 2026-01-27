@@ -4,12 +4,23 @@ import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import ContactForm from "./ContactForm";
 import { useTranslation, Trans } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
-
   return (
+    
     <div className="sq-root">
+      <Helmet>
+        <title>{t("seo.home.title", "Sequential — Websites die converteren")}</title>
+        <meta
+          name="description"
+          content={t(
+            "seo.home.description",
+            "Sequential bouwt snelle, moderne websites die er strak uitzien en leads opleveren. Vraag een vrijblijvende offerte aan."
+          )}
+        />
+      </Helmet>
       <NavBar />
 
       <main>

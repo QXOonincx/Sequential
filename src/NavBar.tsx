@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./CSS/index.css";
+import logo from "./Images/logo.png";
+import { NavLink, Link } from "react-router-dom";
 
-
-type NavLink = {
+type NavItem = {
   labelKey: string;
   href: string;
 };
 
-const navLinks: NavLink[] = [
+const navLinks: NavItem[] = [
   { labelKey: "nav.home", href: "/" },
   { labelKey: "nav.services", href: "/onze-diensten" },
   { labelKey: "nav.process", href: "/proces" },
@@ -32,18 +32,24 @@ const NavBar: React.FC = () => {
   return (
     <header className="sq-header">
       <div className="sq-container sq-header-inner">
-        <div className="sq-logo">
-          <span className="sq-logo-mark">S</span>
-          <span className="sq-logo-text">Sequential</span>
-        </div>
+        <Link to="/" className="sq-logo" aria-label="Go to homepage">
+          <img src={logo} alt="Sequential" className="sq-logo-image" />
+        </Link>
 
         {/* Desktop navigatie */}
         <nav className="sq-nav sq-nav-desktop">
           {navLinks.map((link) =>
             link.href.startsWith("/") ? (
-              <Link key={link.href} to={link.href} className="sq-nav-link">
+              <NavLink
+                key={link.href}
+                to={link.href}
+                className={({ isActive }) =>
+                  `sq-nav-link ${isActive ? "is-active" : ""}`
+                }
+                end={link.href === "/"}
+              >
                 {t(link.labelKey)}
-              </Link>
+              </NavLink>
             ) : (
               <a key={link.href} href={link.href} className="sq-nav-link">
                 {t(link.labelKey)}
@@ -58,10 +64,7 @@ const NavBar: React.FC = () => {
             {t("nav.quote")}
           </Link>
 
-          <button
-            className={`sq-lang-btn ${i18n.language}`}
-            onClick={toggleLanguage}
-          >
+          <button className={`sq-lang-btn ${i18n.language}`} onClick={toggleLanguage}>
             {i18n.language.toUpperCase()}
           </button>
 
@@ -83,14 +86,17 @@ const NavBar: React.FC = () => {
         <nav className="sq-nav-mobile">
           {navLinks.map((link) =>
             link.href.startsWith("/") ? (
-              <Link
+              <NavLink
                 key={link.href}
                 to={link.href}
-                className="sq-nav-link"
+                className={({ isActive }) =>
+                  `sq-nav-link ${isActive ? "is-active" : ""}`
+                }
+                end={link.href === "/"}
                 onClick={() => setIsMobileOpen(false)}
               >
                 {t(link.labelKey)}
-              </Link>
+              </NavLink>
             ) : (
               <a
                 key={link.href}

@@ -2,13 +2,26 @@ import React from "react";
 import "./CSS/index.css";
 import NavBar from "./NavBar";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const Process: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
+      <Helmet>
+        <title>{t("seo.process.title", "Ons proces — Sequential")}</title>
+        <meta
+          name="description"
+          content={t(
+            "seo.process.description",
+            "Ontdek ons proces: van strategie en design tot ontwikkeling en lancering. Zo bouwen wij websites die converteren."
+          )}
+        />
+      </Helmet>
+
       <NavBar />
+
       <main>
         <section className="sq-section sq-process">
           <div className="sq-container">
@@ -17,9 +30,7 @@ const Process: React.FC = () => {
               <p>{t("process.subtitle")}</p>
             </div>
 
-            <p className="sq-process-intro">
-              {t("processPage.intro")}
-            </p>
+            <p className="sq-process-intro">{t("processPage.intro")}</p>
 
             <ol className="sq-steps sq-process-steps">
               {/* Stap 1 */}

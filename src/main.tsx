@@ -7,7 +7,7 @@ import Process from "./proces";
 import AboutSection from "./over-ons";
 import ContactSection from "./contact";
 import "./i18n";
-
+import { HelmetProvider } from "react-helmet-async";
 import "./CSS/index.css";
 
 const App: React.FC = () => {
@@ -24,5 +24,12 @@ const App: React.FC = () => {
   );
 };
 
+
 const root = ReactDOM.createRoot(document.getElementById("root")!);
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </React.StrictMode>
+);
