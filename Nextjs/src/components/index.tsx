@@ -12,7 +12,7 @@ import { useTranslation, Trans } from "react-i18next";
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   return (
-    
+
     <div className="sq-root">
       {/* <Helmet>
         <title>{t("seo.home.title", "Sequential — Websites die converteren")}</title>

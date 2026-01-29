@@ -45,14 +45,14 @@ export default function NavBar() {
     <header className="sq-header">
       <div className="sq-container sq-header-inner">
       <Link href="/" className="sq-logo" aria-label="Go to homepage" onClick={closeMenu}>
-        <Image
-          src="/logo.png"
-          alt="Sequential"
-          width={140}
-          height={40}
-          priority
-          style={{ height: "auto" }}
-        />
+      <Image
+        src="/d.png"
+        alt="Sequential"
+        width={220}
+        height={1}
+        priority
+        className="sq-logo-image"
+      />
       </Link>
 
         {/* Desktop navigatie */}
