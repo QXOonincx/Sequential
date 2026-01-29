@@ -1,15 +1,18 @@
+"use client";
+
+
 import React from "react";
-import "./CSS/index.css";
+import "@/styles/index.css";
 import NavBar from "./NavBar";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 
 const OnzeDiensten: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
-      <Helmet>
+      {/* <Helmet>
         <title>{t("seo.services.title", "Onze diensten — Sequential")}</title>
         <meta
           name="description"
@@ -18,9 +21,9 @@ const OnzeDiensten: React.FC = () => {
             "Bekijk onze diensten: websites, landingpages en redesigns. Snelle, moderne websites die er strak uitzien en converteren."
           )}
         />
-      </Helmet>
+      </Helmet> */}
 
-      <NavBar />
+      {/* <NavBar /> */}
 
       <main>
         <section className="sq-section">
@@ -83,7 +86,7 @@ const OnzeDiensten: React.FC = () => {
                   <ul className="sq-process-list">
                     <li>{t("services.service2.list.1")}</li>
                     <li>{t("services.service2.list.2")}</li>
-                    <li>{t("services.service2.list.3")}</li>
+                    {/* <li>{t("services.service2.list.3")}</li> */}
                   </ul>
                 </div>
               </li>

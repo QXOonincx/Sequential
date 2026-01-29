@@ -1,5 +1,8 @@
+"use client";
+
+
 import React from "react";
-import "./CSS/index.css";
+import "@/styles/index.css";
 import { useTranslation } from "react-i18next";
 
 const ContactForm: React.FC = () => {

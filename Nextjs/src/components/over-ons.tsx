@@ -1,15 +1,18 @@
-import "./CSS/index.css";
+"use client";
+
+
+import "@/styles/index.css";
 import NavBar from "./NavBar";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 
 const AboutSection: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="sq-root">
-      <Helmet>
+      {/* <Helmet>
         <title>{t("seo.about.title", "Over ons — Sequential")}</title>
         <meta
           name="description"
@@ -18,9 +21,8 @@ const AboutSection: React.FC = () => {
             "Lees meer over Sequential: onze missie, visie en kernwaarden. Wij bouwen snelle, moderne websites die converteren."
           )}
         />
-      </Helmet>
+      </Helmet> */}
 
-      <NavBar />
 
       <main>
         <section className="sq-section sq-process">

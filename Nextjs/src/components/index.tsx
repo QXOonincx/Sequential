@@ -1,17 +1,20 @@
+"use client";
+
+
 import React from "react";
-import "./CSS/index.css";
-import { Link } from "react-router-dom";
+import "@/styles/index.css";
+import Link from "next/link";
 import NavBar from "./NavBar";
 import ContactForm from "./ContactForm";
 import { useTranslation, Trans } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   return (
     
     <div className="sq-root">
-      <Helmet>
+      {/* <Helmet>
         <title>{t("seo.home.title", "Sequential — Websites die converteren")}</title>
         <meta
           name="description"
@@ -20,8 +23,8 @@ const HomePage: React.FC = () => {
             "Sequential bouwt snelle, moderne websites die er strak uitzien en leads opleveren. Vraag een vrijblijvende offerte aan."
           )}
         />
-      </Helmet>
-      <NavBar />
+      </Helmet> */}
+      {/* <NavBar /> */}
 
       <main>
         {/* Hero */}
@@ -101,7 +104,7 @@ const HomePage: React.FC = () => {
               </div>
             </div>
             <br />
-            <Link to="/onze-diensten" className="sq-btn sq-btn-primary">{t("services.link")}</Link>
+            <Link href="/onze-diensten" className="sq-btn sq-btn-primary">{t("services.link")}</Link>
           </div>
         </section>
 
@@ -138,7 +141,7 @@ const HomePage: React.FC = () => {
             </ol>
 
             <div className="sq-process-cta" style={{ marginTop: "2rem" }}>
-              <Link to="/proces" className="sq-btn sq-btn-primary">{t("process.cta")}</Link>
+              <Link href="/proces" className="sq-btn sq-btn-primary">{t("process.cta")}</Link>
             </div>
           </div>
         </section>
@@ -151,7 +154,7 @@ const HomePage: React.FC = () => {
               <p>{t("about.text")}</p>
               
               <div className="sq-process-cta" style={{ marginTop: "2rem" }}>
-                <Link to="/over-ons" className="sq-btn sq-btn-primary">{t("about.why.link")}</Link>
+                <Link href="/over-ons" className="sq-btn sq-btn-primary">{t("about.why.link")}</Link>
               </div>
             </div>
 
