@@ -24,6 +24,7 @@
   "services.intro": "Our services are focused on one goal: a website that communicates clearly, builds trust, and contributes to the growth of your business. Whether you’re starting a new website or improving an existing one, we think strategically with you.",
 
   "services.service1.title": "Business Websites",
+  "services.service1.kopje": "Professional, modern websites...",
   "services.service1.summary": "A professional website that clearly positions your business and builds trust.",
   "services.service1.text": "Suitable for service providers, SMEs, and growing organizations that want to be taken seriously online.",
   "services.service1.list.1": "Custom design tailored to your brand and audience",
@@ -31,6 +32,7 @@
   "services.service1.list.3": "Scalable: easily add new pages",
 
   "services.service2.title": "Landing Pages",
+  "services.service2.kopje": "Effective landing pages...",
   "services.service2.summary": "Landing pages with one clear focus: conversion.",
   "services.service2.text": "Ideal for campaigns, new services, or testing propositions.",
   "services.service2.list.1": "Conversion-focused structure and copy",
@@ -38,6 +40,7 @@
   "services.service2.list.3": "",
 
   "services.service3.title": "Redesign & Optimization",
+  "services.service3.kopje": "Already have a website?",
   "services.service3.summary": "Is your website strong in content but visually or technically outdated?",
   "services.service3.text": "We provide a thoughtful upgrade without rebuilding everything from scratch.",
   "services.service3.list.1": "Improvement of UX, navigation, and visual hierarchy",

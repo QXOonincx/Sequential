@@ -76,7 +76,7 @@ const HomePage: React.FC = () => {
             <div className="sq-grid-3">
               <div className="sq-card">
                 <h3>{t("services.cards.business.title")}</h3>
-                <p>Professional, modern websites...</p>
+                <p>{t("services.service1.kopje")}</p>
                 <ul className="sq-card-list">
                   <li>{t("services.cards.business.list.1")}</li>
                   <li>{t("services.cards.business.list.2")}</li>
@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 
               <div className="sq-card">
                 <h3>{t("services.cards.landing.title")}</h3>
-                <p>Effective landing pages...</p>
+                <p>{t("services.service2.kopje")}</p>
                 <ul className="sq-card-list">
                   <li>{t("services.cards.landing.list.1")}</li>
                   <li>{t("services.cards.landing.list.2")}</li>
@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
 
               <div className="sq-card">
                 <h3>{t("services.cards.redesign.title")}</h3>
-                <p>Already have a website?</p>
+                <p>{t("services.service3.kopje")}</p>
                 <ul className="sq-card-list">
                   <li>{t("services.cards.redesign.list.1")}</li>
                   <li>{t("services.cards.redesign.list.2")}</li>

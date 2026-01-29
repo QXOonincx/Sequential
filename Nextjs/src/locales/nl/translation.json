@@ -24,6 +24,7 @@
   "services.intro": "Onze diensten zijn gericht op één doel: een website die duidelijk communiceert, vertrouwen opbouwt en bijdraagt aan de groei van je bedrijf. Of je nu start met een nieuwe website of je bestaande site wilt verbeteren — we denken strategisch met je mee.",
 
   "services.service1.title": "Bedrijfswebsites",
+  "services.service1.kopje": "Professionele, moderne websites",
   "services.service1.summary": "Een professionele website die je bedrijf helder positioneert en vertrouwen uitstraalt.",
   "services.service1.text": "Geschikt voor dienstverleners, MKB en groeiende organisaties die online serieus genomen willen worden.",
   "services.service1.list.1": "Uniek ontwerp afgestemd op je merk en doelgroep",
@@ -31,6 +32,7 @@
   "services.service1.list.3": "Schaalbaar: eenvoudig uit te breiden met nieuwe pagina’s",
 
   "services.service2.title": "Landingspagina’s",
+  "services.service2.kopje": "Effectieve landingspagina’s",
   "services.service2.summary": "Landingspagina’s met één duidelijke focus: conversie.",
   "services.service2.text": "Ideaal voor campagnes, nieuwe diensten of het testen van proposities.",
   "services.service2.list.1": "Conversiegerichte opbouw en copy-structuur",
@@ -38,6 +40,7 @@
   "services.service2.list.3": "",
 
   "services.service3.title": "Redesign & optimalisatie",
+  "services.service3.kopje": "Heb je al een website?",
   "services.service3.summary": "Is je website inhoudelijk sterk, maar visueel of technisch verouderd?",
   "services.service3.text": "Wij zorgen voor een doordachte upgrade zonder alles opnieuw te hoeven opbouwen.",
   "services.service3.list.1": "Verbetering van UX, navigatie en visuele hiërarchie",
