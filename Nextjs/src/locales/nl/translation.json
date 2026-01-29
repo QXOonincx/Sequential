@@ -122,14 +122,14 @@
 
   "contact.title": "Vertel ons over je project",
   "contact.text": "Deel enkele details en we komen bij je terug met ideeën, een globale tijdlijn en een prijsindicatie.",
-  "contact.note": "Liever mailen? Stuur ons een bericht via <1>hello@sequential.com</1>",
+  "contact.note": "Liever mailen? Stuur ons een bericht via <0>info@sequentialwebsites.com</0>",
 
   "contactForm.name": "Naam",
   "contactForm.namePlaceholder": "Jouw naam",
   "contactForm.company": "Bedrijf",
   "contactForm.companyPlaceholder": "Jouw bedrijf",
   "contactForm.email": "E-mail",
-  "contactForm.emailPlaceholder": "jij@bedrijf.com",
+  "contactForm.emailPlaceholder": "Jouw email",
   "contactForm.details": "Projectdetails",
   "contactForm.detailsPlaceholder": "Vertel ons over je bedrijf, je doelen en wat je nodig hebt.",
   "contactForm.submit": "Verstuur bericht",
