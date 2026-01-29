@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 type Step = {
   n: number;
   title: string;
-  desc: string;
   long: string;
   listTitle: string;
   list: string[];
@@ -24,7 +23,6 @@ const Process: React.FC = () => {
       {
         n: 1,
         title: t("process.step1.title"),
-        desc: t("process.step1.desc"),
         long: t("processPage.step1.long"),
         listTitle: t("processPage.step1.listTitle"),
         list: [
@@ -228,7 +226,6 @@ const Process: React.FC = () => {
 
                       <article className="sq-tl-card">
                         <span className="sq-tl-step">Stap {s.n}</span>
-                        <p className="sq-tl-summary">{s.desc}</p>
 
                         <p>{s.long}</p>
                         <p className="sq-process-list-title">{s.listTitle}</p>
