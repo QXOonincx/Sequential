@@ -73,11 +73,12 @@
   "process.title": "Our Process",
   "process.subtitle": "A clear and simple journey so you always know the next step.",
   "process.step1.title": "Discovery & Requirements",
+  "process.step1.desc": "We start with an introduction and then do a quick preview, so you can immediately see if we are on the right track.",
 
   "process.step2.title": "Website development",
-  "process.step2.desc": "Wireframes, visual direction, and content structure are developed.",
+  "process.step2.desc": "After the preview, we build the website while maintaining constant contact and adjust everything until it is completely correct.",
   "process.step3.title": "Launch & guidance",
-  "process.step3.desc": "We build, test, and launch the website smoothly.",
+  "process.step3.desc": "Once everything is ready, we will launch the website and explain how you can make minor adjustments yourself, with support when needed.",
   "process.cta": "View the full process →",
 
   "processPage.intro": "On this page you’ll find a more detailed breakdown of how we work together. From the first call to launch: structured, transparent, and without surprises.",

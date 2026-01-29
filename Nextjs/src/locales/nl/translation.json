@@ -73,10 +73,11 @@
   "process.title": "Ons proces",
   "process.subtitle": "Een helder en eenvoudig traject, zodat je altijd weet wat de volgende stap is.",
   "process.step1.title": "Ontdekking & benodigheden",
+  "process.step1.desc": "We starten met een kennismaking en maken daarna een snelle preview, zodat je direct ziet of de richting klopt.",
   "process.step2.title": "Website bouwen",
-  "process.step2.desc": "Wireframes, visuele richting en contentstructuur worden uitgewerkt.",
+  "process.step2.desc": "Na de preview bouwen we de website met voortdurend contact en passen we alles aan tot het helemaal klopt.",
   "process.step3.title": "Livegang & uitleg",
-  "process.step3.desc": "We bouwen, testen en lanceren de website op een soepele manier.",
+  "process.step3.desc": "Als alles klaar is, zetten we de website live en leggen we uit hoe je zelf kleine aanpassingen kunt doen, met ondersteuning wanneer nodig.",
   "process.cta": "Bekijk het volledige proces →",
 
   "processPage.intro": "Op deze pagina vind je een uitgebreider overzicht van hoe we samenwerken. Van het eerste gesprek tot en met de lancering van je website: duidelijk, gestructureerd en zonder verrassingen.",
@@ -99,7 +100,7 @@
   "processPage.step3.list.3": "Testen van formulieren, navigatie en belangrijke gebruiksstromen voordat we live gaan.",
   "processPage.step3.list.4": "Begeleide livegang en een korte uitleg zodat je zelf kleine aanpassingen kunt doen.",
   "processPage.outro.title": "Heldere samenwerking, geen gedoe",
-  "processPage.outro.text": "We houden van korte lijnen, transparante communicatie en duidelijke afspraken. Je hebt één vast aanspreekpunt en weet op elk moment in welke fase het project zit. Zo ontstaat er ruimte voor wat echt telt: een website die je bedrijf vooruithelpt.",
+  "processPage.outro.text": "en vWe houdan korte lijnen, transparante communicatie en duidelijke afspraken. Je hebt één vast aanspreekpunt en weet op elk moment in welke fase het project zit. Zo ontstaat er ruimte voor wat echt telt: een website die je bedrijf vooruithelpt.",
 
   "about.tagline": "Een klein team, grote impact",
   "about.title": "Over Sequential",
