@@ -5,3 +5,18 @@
 @import "./contact.css";
 @import "./footer.css";
 @import "./languageToggle.css";
+
+
+/* html, body {
+  height: 100%;
+}
+
+.sq-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sq-root > main {
+  flex: 1;
+} */
