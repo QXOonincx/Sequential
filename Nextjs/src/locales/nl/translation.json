@@ -134,7 +134,13 @@
   "contactForm.detailsPlaceholder": "Vertel ons over je bedrijf, je doelen en wat je nodig hebt.",
   "contactForm.submit": "Verstuur bericht",
   "contactForm.alert": "Formulierverwerking is nog niet gekoppeld.",
+  "contactForm.sending": "Bericht wordt verzonden…",
+  "contactForm.success": "Je bericht is succesvol verzonden!",
+  "contactForm.error": "Er ging iets mis. Probeer het later opnieuw.",
 
   "footer.copy": "© {{year}} Sequential. Alle rechten voorbehouden.",
   "footer.secondary": "Websites voor bedrijven die willen groeien."
+
+
+
 }

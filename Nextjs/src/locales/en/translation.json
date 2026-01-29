@@ -134,6 +134,9 @@
   "contactForm.detailsPlaceholder": "Tell us about your business, goals, and what you need.",
   "contactForm.submit": "Send Message",
   "contactForm.alert": "Form handling is not connected yet.",
+  "contactForm.sending": "Sending message…",
+  "contactForm.success": "Your message has been sent successfully!",
+  "contactForm.error": "Something went wrong. Please try again later.",
 
   "footer.copy": "© {{year}} Sequential. All rights reserved.",
   "footer.secondary": "Websites for businesses looking to grow."
