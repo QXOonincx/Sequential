@@ -126,6 +126,12 @@ const OnzeDiensten: React.FC = () => {
           </div>
         </section>
       </main>
+      <footer className="sq-footer">
+        <div className="sq-container sq-footer-inner">
+          <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
+          <p className="sq-footer-secondary">{t("footer.secondary")}</p>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -24,22 +24,27 @@ export const ContactSection: React.FC = () => {
         />
       </Helmet> */}
 
-      <main>
+      <main style={{ minHeight: "90vh" }}>
         <div className="sq-container sq-contact-grid" style={{ marginTop: "3rem" }}>
           <div>
             <h2>{t("contact.title")}</h2>
             <p>{t("contact.text")}</p>
             <p className="sq-contact-note">
-              <Trans i18nKey="contact.note">
-                Liever mailen? Stuur ons een bericht via{" "}
-                <a href="mailto:hello@sequential.com">hello@sequential.com</a>
-              </Trans>
+                <Trans i18nKey="contact.note">
+                  Liever mailen? Stuur ons een bericht via <a href="mailto:info@sequentialwebsites.com">info@sequentialwebsites.com</a>
+                </Trans>
             </p>
           </div>
 
           <ContactForm />
         </div>
       </main>
+      <footer className="sq-footer">
+        <div className="sq-container sq-footer-inner">
+          <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
+          <p className="sq-footer-secondary">{t("footer.secondary")}</p>
+        </div>
+      </footer>
     </div>
   );
 };
