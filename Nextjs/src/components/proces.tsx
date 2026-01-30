@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import "@/styles/index.css";
 import "@/styles/dots.css";
 import { useTranslation } from "react-i18next";
@@ -73,74 +79,104 @@ const Process: React.FC = () => {
     steps.map(() => false)
   );
 
-  // start & end van de lijn (dot centers)
-  useEffect(() => {
+  // --- helpers ---
+  const setTimelineRange = () => {
     const tl = timelineRef.current;
     if (!tl) return;
 
-    const setRange = () => {
-      const firstDot = dotRefs.current[0];
-      const lastDot = dotRefs.current[dotRefs.current.length - 1];
-      if (!firstDot || !lastDot) return;
+    const firstDot = dotRefs.current[0];
+    const lastDot = dotRefs.current[dotRefs.current.length - 1];
+    if (!firstDot || !lastDot) return;
 
-      const tlRect = tl.getBoundingClientRect();
+    const tlRect = tl.getBoundingClientRect();
 
-      const startPx =
-        firstDot.getBoundingClientRect().top +
-        firstDot.offsetHeight / 2 -
-        tlRect.top;
+    const startPx =
+      firstDot.getBoundingClientRect().top +
+      firstDot.offsetHeight / 2 -
+      tlRect.top;
 
-      const endPx =
-        lastDot.getBoundingClientRect().top +
-        lastDot.offsetHeight / 2 -
-        tlRect.top;
+    const endPx =
+      lastDot.getBoundingClientRect().top +
+      lastDot.offsetHeight / 2 -
+      tlRect.top;
 
-      tl.style.setProperty("--sq-tl-start", `${startPx}px`);
-      tl.style.setProperty("--sq-tl-end", `${endPx}px`);
+    tl.style.setProperty("--sq-tl-start", `${startPx}px`);
+    tl.style.setProperty("--sq-tl-end", `${endPx}px`);
+  };
+
+  const updateFillAndReached = () => {
+    const tl = timelineRef.current;
+    if (!tl) return;
+
+    const rect = tl.getBoundingClientRect();
+    const triggerY = window.innerHeight * 0.5;
+
+    const styles = getComputedStyle(tl);
+    const startPx = parseFloat(styles.getPropertyValue("--sq-tl-start")) || 0;
+    const endPx =
+      parseFloat(styles.getPropertyValue("--sq-tl-end")) || rect.height;
+
+    const range = Math.max(1, endPx - startPx);
+    const raw = (triggerY - (rect.top + startPx)) / range;
+    const progress = clamp(raw, 0, 1);
+
+    if (fillRef.current) {
+      fillRef.current.style.height = `${range * progress}px`;
+    }
+
+    setReached(
+      steps.map((_, i) => {
+        const dot = dotRefs.current[i];
+        if (!dot) return false;
+        const r = dot.getBoundingClientRect();
+        // once the dot center is above the trigger line, it stays "reached"
+        return r.top + r.height / 2 <= triggerY;
+      })
+    );
+  };
+
+  // Recalculate line start/end whenever content/layout changes (e.g. language switch)
+  useLayoutEffect(() => {
+    const tl = timelineRef.current;
+    if (!tl) return;
+
+    let raf1 = 0;
+    let raf2 = 0;
+
+    const measure = () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          setTimelineRange();
+          updateFillAndReached();
+        });
+      });
     };
 
-    setRange();
-    window.addEventListener("resize", setRange);
-    return () => window.removeEventListener("resize", setRange);
-  }, [steps.length]);
+    measure();
+
+    const ro = new ResizeObserver(() => measure());
+    ro.observe(tl);
+    itemRefs.current.forEach((n) => n && ro.observe(n));
+
+    window.addEventListener("resize", measure);
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
+    };
+  }, [steps]);
 
   // scroll → lijn + reached
   useEffect(() => {
-    const tl = timelineRef.current;
-    if (!tl) return;
-
     let raf = 0;
-
-    const update = () => {
-      const rect = tl.getBoundingClientRect();
-      const triggerY = window.innerHeight * 0.5;
-
-      const styles = getComputedStyle(tl);
-      const startPx = parseFloat(styles.getPropertyValue("--sq-tl-start")) || 0;
-      const endPx =
-        parseFloat(styles.getPropertyValue("--sq-tl-end")) || rect.height;
-
-      const range = Math.max(1, endPx - startPx);
-      const raw = (triggerY - (rect.top + startPx)) / range;
-      const progress = clamp(raw, 0, 1);
-
-      if (fillRef.current) {
-        fillRef.current.style.height = `${range * progress}px`;
-      }
-
-      setReached(
-        steps.map((_, i) => {
-          const dot = dotRefs.current[i];
-          if (!dot) return false;
-          const r = dot.getBoundingClientRect();
-          return r.top + r.height / 2 <= triggerY;
-        })
-      );
-    };
 
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
+      raf = requestAnimationFrame(updateFillAndReached);
     };
 
     onScroll();
@@ -179,7 +215,6 @@ const Process: React.FC = () => {
 
   return (
     <>
-      {/* Dot pattern background (old style) */}
       <div className="sq-bg-dots" aria-hidden="true" />
 
       <div className="sq-root">
@@ -203,7 +238,8 @@ const Process: React.FC = () => {
                 <ol className="sq-timeline-list">
                   {steps.map((s, i) => {
                     const side = i % 2 === 0 ? "left" : "right";
-                    const isActive = inCenter[i] && reached[i];
+                    const isActive = inCenter[i] && reached[i]; // (optional) only when centered
+                    const isReached = reached[i]; // ✅ stays true after passing the dot
 
                     return (
                       <li
@@ -211,7 +247,7 @@ const Process: React.FC = () => {
                         data-index={i}
                         className={`sq-tl-item sq-tl-${side} ${
                           isActive ? "is-active" : ""
-                        }`}
+                        } ${isReached ? "is-reached" : ""}`}
                         ref={(node) => {
                           itemRefs.current[i] = node;
                         }}
