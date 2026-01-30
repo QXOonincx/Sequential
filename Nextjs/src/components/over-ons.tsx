@@ -1,114 +1,275 @@
 "use client";
 
-
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "@/styles/index.css";
-import NavBar from "./NavBar";
-import React from "react";
+import "@/styles/dots.css";
 import { useTranslation } from "react-i18next";
-// import { Helmet } from "react-helmet-async";
+import { Sparkles, Target, Zap, ChevronDown } from "lucide-react";
+
+type AboutCard = {
+  n: string;
+  title: string;
+  text: string;
+  bullets?: string[];
+  icon: React.ReactNode;
+};
 
 const AboutSection: React.FC = () => {
   const { t } = useTranslation();
 
+  const cards: AboutCard[] = useMemo(
+    () => [
+      {
+        n: "01",
+        title: t("about.mission.title"),
+        text: t("about.mission.text"),
+        icon: <Sparkles className="sq-about-icon-svg" aria-hidden="true" />,
+      },
+      {
+        n: "02",
+        title: t("about.vision.title"),
+        text: t("about.vision.text"),
+        icon: <Target className="sq-about-icon-svg" aria-hidden="true" />,
+      },
+      {
+        n: "03",
+        title: t("about.why.title"),
+        text: t("about.why.long"),
+        bullets: [
+          t("about.why.list.1"),
+          t("about.why.list.2"),
+          t("about.why.list.3"),
+          t("about.why.list.4"),
+        ],
+        icon: <Zap className="sq-about-icon-svg" aria-hidden="true" />,
+      },
+    ],
+    [t]
+  );
+
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visible, setVisible] = useState<boolean[]>(() =>
+    cards.map(() => false)
+  );
+
+  const [hideScrollHint, setHideScrollHint] = useState(false);
+
+  // Keep visible[] length in sync (safe even if cards never changes length)
+  useEffect(() => {
+    setVisible((prev) => {
+      if (prev.length === cards.length) return prev;
+      return cards.map(() => false);
+    });
+  }, [cards.length]);
+
+  /* ======================================================
+     Scroll reveal for each row (mount once)
+  ====================================================== */
+  useEffect(() => {
+    let obs: IntersectionObserver | null = null;
+    let tries = 0;
+    let timer: number | null = null;
+
+    const attach = () => {
+      const nodes = itemRefs.current.filter(Boolean) as HTMLDivElement[];
+      if (!nodes.length) {
+        tries += 1;
+        if (tries < 30) timer = window.setTimeout(attach, 50);
+        return;
+      }
+
+      obs = new IntersectionObserver(
+        (entries) => {
+          setVisible((prev) => {
+            const next = [...prev];
+            for (const e of entries) {
+              const idx = Number((e.target as HTMLElement).dataset.index);
+              if (!Number.isNaN(idx)) next[idx] = e.isIntersecting;
+            }
+            return next;
+          });
+        },
+        {
+          threshold: 0.22,
+          rootMargin: "-10% 0px -20% 0px",
+        }
+      );
+
+      nodes.forEach((n) => obs!.observe(n));
+    };
+
+    attach();
+
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      if (obs) obs.disconnect();
+    };
+  }, []); // ✅ constant deps
+
+  /* ======================================================
+     Keep scroll cue visible until LAST card is ~fully visible
+  ====================================================== */
+  useEffect(() => {
+    let obs: IntersectionObserver | null = null;
+    let tries = 0;
+    let timer: number | null = null;
+
+    const attach = () => {
+      // last existing ref (safe)
+      const lastEl =
+        [...itemRefs.current].reverse().find((el) => el != null) ?? null;
+
+      if (!lastEl) {
+        tries += 1;
+        if (tries < 30) timer = window.setTimeout(attach, 50);
+        return;
+      }
+
+      obs = new IntersectionObserver(
+        ([entry]) => {
+          // Hide only when ~90% visible (use 1 for fully visible)
+          setHideScrollHint(entry.intersectionRatio >= 0.9);
+        },
+        {
+          threshold: [0, 0.25, 0.5, 0.75, 0.9, 1],
+          rootMargin: "0px",
+        }
+      );
+
+      obs.observe(lastEl);
+    };
+
+    attach();
+
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      if (obs) obs.disconnect();
+    };
+  }, []); // ✅ constant deps
+
+  const scrollDownOne = () => {
+    window.scrollBy({
+      top: Math.round(window.innerHeight * 0.75),
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="sq-root">
-      {/* <Helmet>
-        <title>{t("seo.about.title", "Over ons — Sequential")}</title>
-        <meta
-          name="description"
-          content={t(
-            "seo.about.description",
-            "Lees meer over Sequential: onze missie, visie en kernwaarden. Wij bouwen snelle, moderne websites die converteren."
-          )}
-        />
-      </Helmet> */}
+    <>
+      <div className="sq-bg-dots" aria-hidden="true" />
 
+      <div className="sq-root">
+        <main>
+          <section className="sq-section sq-about-page">
+            <div className="sq-container">
+              {/* ===== DIAGONAL MARQUEE ===== */}
+              <div className="sq-about-marqueeWrap" aria-hidden="true">
+                <div className="sq-about-marqueeSkew">
+                  <div className="sq-about-marqueeTrack">
+                    <span className="sq-about-marqueeText">
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —
+                    </span>
+                    <span className="sq-about-marqueeText">
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —{" "}
+                      {t("about.title")} — {t("about.title")} —
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-      <main>
-        <section className="sq-section sq-process">
-          <div className="sq-container">
+              {/* ===== INTRO ===== */}
+              <header className="sq-about-hero">
+                <h2 className="sq-about-h2">{t("about.title")}</h2>
+                <p className="sq-about-lead">{t("about.text")}</p>
+              </header>
 
-            {/* Section Header */}
-            <div className="sq-section-header">
-              <h2>{t("about.title")}</h2>
-              <p>{t("about.text")}</p>
+              {/* ===== STACK ===== */}
+              <div className="sq-about-stack">
+                {cards.map((c, i) => (
+                  <div
+                    key={c.n}
+                    data-index={i}
+                    ref={(node) => {
+                      itemRefs.current[i] = node;
+                    }}
+                    className={[
+                      "sq-about-row",
+                      visible[i] ? "is-visible" : "",
+                    ].join(" ")}
+                    style={
+                      {
+                        ["--row-accent" as any]:
+                          i === 0
+                            ? "rgb(147 109 255)"
+                            : i === 1
+                            ? "rgb(96 140 255)"
+                            : "rgb(92 178 230)",
+                      } as React.CSSProperties
+                    }
+                  >
+                    <article className="sq-about-box">
+                      <div className="sq-about-boxTop">
+                        <span className="sq-about-badge">{c.n}</span>
+                        <h3 className="sq-about-h3">{c.title}</h3>
+                      </div>
+
+                      <p className="sq-about-p">{c.text}</p>
+
+                      {c.bullets?.length ? (
+                        <ul className="sq-about-list">
+                          {c.bullets.map((b, idx) => (
+                            <li key={idx}>{b}</li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </article>
+
+                    <div className="sq-about-iconStage" aria-hidden="true">
+                      <div className="sq-about-iconOrb">
+                        <div className="sq-about-iconInner">{c.icon}</div>
+                      </div>
+                      <div className="sq-about-iconShadow" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <ol className="sq-steps sq-process-steps">
+            {/* ===== SCROLL CUE ===== */}
+            <div
+              className={[
+                "sq-scrollCue",
+                hideScrollHint ? "is-hidden" : "",
+              ].join(" ")}
+            >
+              <button
+                className="sq-scrollCue-btn"
+                type="button"
+                onClick={scrollDownOne}
+                aria-label="Scroll naar beneden"
+              >
+                <span className="sq-scrollCue-text">Scroll om meer te zien</span>
+                <span className="sq-scrollCue-icon" aria-hidden="true">
+                  <ChevronDown size={18} />
+                </span>
+              </button>
+            </div>
+          </section>
+        </main>
 
-              {/* Step 1: Mission */}
-              <li className="sq-step sq-process-step">
-                <div className="sq-process-step-header">
-                  <span className="sq-step-number">1</span>
-                  <div>
-                    <h3 className="sq-process-step-title">{t("about.mission.title")}</h3>
-                    <p className="sq-process-step-summary">{t("about.mission.text")}</p>
-                  </div>
-                </div>
-              </li>
-
-              {/* Step 2: Vision */}
-              <li className="sq-step sq-process-step">
-                <div className="sq-process-step-header">
-                  <span className="sq-step-number">2</span>
-                  <div>
-                    <h3 className="sq-process-step-title">{t("about.vision.title")}</h3>
-                    <p className="sq-process-step-summary">{t("about.vision.text")}</p>
-                  </div>
-                </div>
-              </li>
-
-              {/* Step 3: Key Benefits */}
-              <li className="sq-step sq-process-step">
-                <div className="sq-process-step-header">
-                  <span className="sq-step-number">3</span>
-                  <div>
-                    <h3 className="sq-process-step-title">{t("about.why.title")}</h3>
-                    <p className="sq-process-step-summary">{t("about.why.intro")}</p>
-                  </div>
-                </div>
-                <div className="sq-process-step-body">
-                  <p>{t("about.why.long")}</p>
-                  <ul className="sq-process-list">
-                    <li>{t("about.why.list.1")}</li>
-                    <li>{t("about.why.list.2")}</li>
-                    <li>{t("about.why.list.3")}</li>
-                    <li>{t("about.why.list.4")}</li>
-                  </ul>
-                </div>
-              </li>
-
-              {/* Step 4: Core Values */}
-              <li className="sq-step sq-process-step">
-                <div className="sq-process-step-header">
-                  <span className="sq-step-number">4</span>
-                  <div>
-                    <h3 className="sq-process-step-title">{t("about.values.title")}</h3>
-                  </div>
-                </div>
-                <div className="sq-process-step-body">
-                  <ul className="sq-process-list">
-                    <li>{t("about.values.list.1")}</li>
-                    <li>{t("about.values.list.2")}</li>
-                    <li>{t("about.values.list.3")}</li>
-                    <li>{t("about.values.list.4")}</li>
-                  </ul>
-                </div>
-              </li>
-
-            </ol>
-
+        <footer className="sq-footer">
+          <div className="sq-container sq-footer-inner">
+            <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
+            <p className="sq-footer-secondary">{t("footer.secondary")}</p>
           </div>
-        </section>
-      </main>
-
-      <footer className="sq-footer">
-        <div className="sq-container sq-footer-inner">
-          <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
-          <p className="sq-footer-secondary">{t("footer.secondary")}</p>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
