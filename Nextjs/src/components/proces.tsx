@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "@/styles/index.css";
+import "@/styles/dots.css";
 import { useTranslation } from "react-i18next";
 
 type Step = {
@@ -35,7 +36,6 @@ const Process: React.FC = () => {
       {
         n: 2,
         title: t("process.step2.title"),
-        desc: t("process.step2.desc"),
         long: t("processPage.step2.long"),
         listTitle: t("processPage.step2.listTitle"),
         list: [
@@ -48,7 +48,6 @@ const Process: React.FC = () => {
       {
         n: 3,
         title: t("process.step3.title"),
-        desc: t("process.step3.desc"),
         long: t("processPage.step3.long"),
         listTitle: t("processPage.step3.listTitle"),
         list: [
@@ -179,78 +178,83 @@ const Process: React.FC = () => {
   }, [steps.length]);
 
   return (
-    <div className="sq-root">
-      <main>
-        <section className="sq-section sq-process">
-          <div className="sq-container">
-            <div className="sq-process-intro-block">
-              <h2>Zo ziet ons website-traject eruit</h2>
-              <p>
-                Van eerste idee tot livegang: we begeleiden je stap voor stap
-                naar een website die klopt, converteert en meegroeit met je
-                ambities.
-              </p>
-            </div>
+    <>
+      {/* Dot pattern background (old style) */}
+      <div className="sq-bg-dots" aria-hidden="true" />
 
-            <div ref={timelineRef} className="sq-timeline">
-              <div className="sq-timeline-line" aria-hidden="true">
-                <div ref={fillRef} className="sq-timeline-line-fill" />
+      <div className="sq-root">
+        <main>
+          <section className="sq-section sq-process">
+            <div className="sq-container">
+              <div className="sq-process-intro-block">
+                <h2>Zo ziet ons website-traject eruit</h2>
+                <p>
+                  Van eerste idee tot livegang: we begeleiden je stap voor stap
+                  naar een website die klopt, converteert en meegroeit met je
+                  ambities.
+                </p>
               </div>
 
-              <ol className="sq-timeline-list">
-                {steps.map((s, i) => {
-                  const side = i % 2 === 0 ? "left" : "right";
-                  const isActive = inCenter[i] && reached[i];
+              <div ref={timelineRef} className="sq-timeline">
+                <div className="sq-timeline-line" aria-hidden="true">
+                  <div ref={fillRef} className="sq-timeline-line-fill" />
+                </div>
 
-                  return (
-                    <li
-                      key={s.n}
-                      data-index={i}
-                      className={`sq-tl-item sq-tl-${side} ${
-                        isActive ? "is-active" : ""
-                      }`}
-                      ref={(node) => {
-                        itemRefs.current[i] = node;
-                      }}
-                    >
-                      <div className="sq-tl-step-title">{s.title}</div>
+                <ol className="sq-timeline-list">
+                  {steps.map((s, i) => {
+                    const side = i % 2 === 0 ? "left" : "right";
+                    const isActive = inCenter[i] && reached[i];
 
-                      <div className="sq-tl-marker" aria-hidden="true">
-                        <span
-                          className="sq-tl-dot"
-                          ref={(node) => {
-                            dotRefs.current[i] = node;
-                          }}
-                        />
-                      </div>
+                    return (
+                      <li
+                        key={s.n}
+                        data-index={i}
+                        className={`sq-tl-item sq-tl-${side} ${
+                          isActive ? "is-active" : ""
+                        }`}
+                        ref={(node) => {
+                          itemRefs.current[i] = node;
+                        }}
+                      >
+                        <div className="sq-tl-step-title">{s.title}</div>
 
-                      <article className="sq-tl-card">
-                        <span className="sq-tl-step">Stap {s.n}</span>
+                        <div className="sq-tl-marker" aria-hidden="true">
+                          <span
+                            className="sq-tl-dot"
+                            ref={(node) => {
+                              dotRefs.current[i] = node;
+                            }}
+                          />
+                        </div>
 
-                        <p>{s.long}</p>
-                        <p className="sq-process-list-title">{s.listTitle}</p>
-                        <ul className="sq-process-list">
-                          {s.list.map((x, idx) => (
-                            <li key={idx}>{x}</li>
-                          ))}
-                        </ul>
-                      </article>
-                    </li>
-                  );
-                })}
-              </ol>
+                        <article className="sq-tl-card">
+                          <span className="sq-tl-step">Stap {s.n}</span>
+
+                          <p>{s.long}</p>
+                          <p className="sq-process-list-title">{s.listTitle}</p>
+                          <ul className="sq-process-list">
+                            {s.list.map((x, idx) => (
+                              <li key={idx}>{x}</li>
+                            ))}
+                          </ul>
+                        </article>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
 
-      <footer className="sq-footer">
-        <div className="sq-container sq-footer-inner">
-          <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
-          <p className="sq-footer-secondary">{t("footer.secondary")}</p>
-        </div>
-      </footer>
-    </div>
+        <footer className="sq-footer">
+          <div className="sq-container sq-footer-inner">
+            <p>{t("footer.copy", { year: new Date().getFullYear() })}</p>
+            <p className="sq-footer-secondary">{t("footer.secondary")}</p>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
