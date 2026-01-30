@@ -12,27 +12,95 @@
   --sq-shadow-soft: 0 0px 10px rgba(0, 0, 0, 0.45);
 }
 
+/* ================= RESET ================= */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+/* ================= BASE ================= */
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+
+  /* Keep this simple, the rest is in .sq-bg */
   background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
   color: var(--sq-text);
 }
 
-/* Layout */
-
+/* ================= ROOT ================= */
 .sq-root {
   min-height: 100vh;
+  position: relative;
   background: transparent;
+  z-index: 0; /* content above background */
 }
 
+/* ================= FULL-PAGE BACKGROUND WRAPPER ================= */
+.sq-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Soft glows + vignette */
+.sq-bg-glow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(900px 700px at 20% 10%, rgba(56,189,248,0.10), transparent 60%),
+    radial-gradient(900px 700px at 80% 90%, rgba(79,70,229,0.08), transparent 60%),
+    radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,0), rgba(0,0,0,0.78) 72%);
+}
+
+/* Moving topo SVG */
+.sq-topo {
+  position: absolute;
+  inset: -200px; /* overscan so edges never show while moving */
+  width: calc(100% + 400px);
+  height: calc(100% + 400px);
+  opacity: 0.75;
+
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+/* Continuous loop (no reverse / no pause) */
+.sq-topo .layer-a {
+  opacity: 0.9;
+  will-change: transform;
+  animation: topo-loop-a 45s linear infinite;
+}
+
+.sq-topo .layer-b {
+  opacity: 0.55;
+  will-change: transform;
+  animation: topo-loop-b 73s linear infinite;
+}
+
+@keyframes topo-loop-a {
+  0% { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(140px,90px,0); }
+}
+
+@keyframes topo-loop-b {
+  0% { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(-110px,-70px,0); }
+}
+
+/* Subtle noise */
+.sq-bg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ================= LAYOUT ================= */
 .sq-container {
   width: 100%;
   max-width: 1120px;
@@ -40,8 +108,7 @@ body {
   padding: 0 1.5rem;
 }
 
-/* Buttons */
-
+/* ================= BUTTONS ================= */
 .sq-btn {
   display: inline-flex;
   align-items: center;
