@@ -480,3 +480,463 @@
     text-align: left !important;
   }
 }
+
+
+
+/* ===============================
+   SERVICES GRID
+================================ */
+.sq-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .sq-services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   BACKDROP (fade rest van pagina)
+================================ */
+.sq-services-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  pointer-events: none;
+  z-index: 8000;
+  transition: background 220ms ease, backdrop-filter 220ms ease;
+}
+
+.sq-services-backdrop.is-on {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+/* ===============================
+   SERVICE CARD – BASIS
+================================ */
+.sq-service-card {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 12, 24, 0.65);
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease,
+    filter 220ms ease,
+    border-color 220ms ease;
+}
+
+/* ✅ layout for bottom button */
+.sq-service-card-inner {
+  padding: 20px;
+  position: relative;
+  z-index: 3; /* content always above effects */
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sq-service-body {
+  flex: 1;
+}
+
+/* ===============================
+   INSIDE EFFECT: AURORA FLOW
+================================ */
+.sq-service-card::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+
+  opacity: 0;
+  transition: opacity 260ms ease;
+
+  background-image:
+    radial-gradient(
+      600px 420px at 20% 25%,
+      color-mix(in srgb, var(--card-color, rgb(120 170 255)) 22%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      680px 460px at 80% 30%,
+      rgba(255, 255, 255, 0.08),
+      transparent 62%
+    ),
+    radial-gradient(
+      620px 440px at 55% 85%,
+      color-mix(in srgb, var(--card-color, rgb(120 170 255)) 14%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      900px 620px at 50% 15%,
+      rgba(255, 255, 255, 0.04),
+      transparent 70%
+    );
+
+  background-size: 140% 140%, 160% 160%, 150% 150%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, 50% 100%, 50% 0%;
+
+  mix-blend-mode: screen;
+  filter: blur(18px);
+  will-change: background-position, opacity;
+}
+
+.sq-service-card .sq-service-card-inner::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  z-index: -1;
+
+  opacity: 0;
+  transition: opacity 260ms ease;
+
+  background-image:
+    radial-gradient(
+      520px 380px at 35% 60%,
+      rgba(255, 255, 255, 0.05),
+      transparent 65%
+    ),
+    radial-gradient(
+      520px 380px at 70% 55%,
+      color-mix(in srgb, var(--card-color, rgb(120 170 255)) 10%, transparent),
+      transparent 65%
+    );
+
+  background-size: 150% 150%, 150% 150%;
+  background-position: 0% 50%, 100% 50%;
+
+  mix-blend-mode: screen;
+  filter: blur(22px);
+  will-change: background-position, opacity;
+}
+
+@keyframes sq-aurora-flow {
+  0% {
+    background-position: 0% 0%, 100% 0%, 50% 100%, 50% 0%;
+  }
+  50% {
+    background-position: 70% 40%, 40% 20%, 30% 60%, 50% 20%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%, 50% 0%;
+  }
+}
+
+@keyframes sq-aurora-drift {
+  0% {
+    background-position: 0% 50%, 100% 50%;
+  }
+  50% {
+    background-position: 60% 40%, 40% 60%;
+  }
+  100% {
+    background-position: 0% 50%, 100% 50%;
+  }
+}
+
+.sq-service-card.is-hovered:not(.is-expanded)::after {
+  opacity: 0.45;
+  animation: sq-aurora-flow 6.5s ease-in-out infinite;
+}
+
+.sq-service-card.is-hovered:not(.is-expanded) .sq-service-card-inner::before {
+  opacity: 0.35;
+  animation: sq-aurora-drift 7.8s ease-in-out infinite;
+}
+
+.sq-service-card.is-expanded::after {
+  opacity: 0.38;
+  animation: sq-aurora-flow 8.2s ease-in-out infinite;
+}
+
+.sq-service-card.is-expanded .sq-service-card-inner::before {
+  opacity: 0.28;
+  animation: sq-aurora-drift 9.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sq-service-card::after,
+  .sq-service-card .sq-service-card-inner::before {
+    animation: none !important;
+  }
+}
+
+/* ===============================
+   MOVING BORDER
+================================ */
+.sq-moving-border {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 1;
+  padding: 2px;
+
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+.sq-moving-border-spin {
+  position: absolute;
+  inset: -200%;
+  opacity: 0;
+  transition: opacity 300ms ease;
+
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 340deg,
+    var(--card-color, rgba(120, 170, 255, 1)) 360deg
+  );
+
+  animation: sq-spin 4s linear infinite;
+}
+
+@keyframes sq-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sq-service-card.is-hovered:not(.is-expanded) .sq-moving-border-spin,
+.sq-service-card.is-expanded .sq-moving-border-spin {
+  opacity: 1;
+}
+
+/* ===============================
+   HOVER LIFT
+================================ */
+.sq-service-card.is-hovered:not(.is-expanded) {
+  transform: translateY(-6px) scale(1.03);
+  border-color: color-mix(in srgb, var(--card-color) 55%, transparent);
+  z-index: 2;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+}
+
+.sq-services-grid:hover
+  .sq-service-card:not(.is-hovered):not(.is-expanded):not(.is-dimmed) {
+  transform: scale(0.985);
+  opacity: 0.9;
+}
+
+/* ===============================
+   DIM AND BLUR NON-ACTIVE CARDS
+================================ */
+.sq-service-card.is-dimmed {
+  opacity: 0.18 !important;
+  filter: blur(1px);
+  transform: scale(0.985);
+  pointer-events: none;
+}
+
+/* ===============================
+   EXPANDED CARD (MAGIC)
+================================ */
+.sq-service-card.is-expanded {
+  position: fixed;
+  top: var(--from-top);
+  left: var(--from-left);
+  width: var(--from-w);
+  height: var(--from-h);
+  z-index: 9000;
+  cursor: default;
+
+  background: rgb(8, 12, 24);
+  border-color: color-mix(in srgb, var(--card-color) 55%, transparent);
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  transition:
+    top 240ms ease,
+    left 240ms ease,
+    width 240ms ease,
+    height 240ms ease,
+    transform 240ms ease,
+    border-color 240ms ease;
+}
+
+.sq-service-card.is-expanded {
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(920px, 92vw);
+  height: min(78vh, 820px);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+
+.sq-service-card.is-expanded .sq-service-card-inner {
+  height: auto;
+  overflow: visible;
+  padding-top: 22px;
+}
+
+/* ===============================
+   CONTENT STYLING
+================================ */
+.sq-service-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+/* ✅ Icon badge (PERFECT CIRCLE FIX) */
+.sq-service-icon {
+  /* lock it so flex cannot stretch it */
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  aspect-ratio: 1 / 1;
+
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  /* prevent font/line-height influence */
+  line-height: 1;
+
+  background: color-mix(in srgb, var(--card-color) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-color) 35%, transparent);
+}
+
+/* icon itself */
+.sq-service-icon-svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 220ms ease, transform 220ms ease, filter 220ms ease;
+}
+
+/* Hover/popup: icon becomes accent + tiny lift */
+.sq-service-card.is-hovered:not(.is-expanded) .sq-service-icon-svg,
+.sq-service-card.is-expanded .sq-service-icon-svg {
+  color: var(--card-color);
+  filter: brightness(1.1);
+  transform: translateY(-0.5px);
+}
+
+.sq-service-title {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  transition: color 220ms ease;
+}
+
+.sq-service-card.is-hovered:not(.is-expanded) .sq-service-title,
+.sq-service-card.is-expanded .sq-service-title {
+  color: var(--card-color);
+}
+
+.sq-service-summary {
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.sq-service-text {
+  opacity: 0.9;
+}
+
+.sq-service-list-title {
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+.sq-service-list {
+  margin: 10px 0 0 0;
+  padding-left: 18px;
+}
+
+/* ===============================
+   ACTION BUTTONS
+================================ */
+.sq-service-actions {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.sq-service-more,
+.sq-service-close {
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    filter 180ms ease,
+    color 180ms ease;
+}
+
+.sq-service-more {
+  width: 100%;
+  padding: 11px 12px;
+}
+
+.sq-service-more:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.18);
+  filter: brightness(1.1);
+}
+
+.sq-service-card.is-expanded .sq-service-actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  margin-top: 0;
+  padding-top: 0;
+  width: auto;
+  z-index: 10;
+}
+
+.sq-service-close {
+  width: auto;
+  padding: 8px 10px;
+  border-radius: 999px;
+
+  background: color-mix(in srgb, var(--card-color) 16%, rgba(255, 255, 255, 0.06));
+  border-color: color-mix(in srgb, var(--card-color) 35%, rgba(255, 255, 255, 0.14));
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.sq-service-close:hover {
+  transform: scale(1.06);
+  filter: brightness(1.15);
+  color: rgba(255, 255, 255, 1);
+  border-color: color-mix(in srgb, var(--card-color) 55%, rgba(255, 255, 255, 0.18));
+  background: color-mix(in srgb, var(--card-color) 22%, rgba(255, 255, 255, 0.08));
+}
