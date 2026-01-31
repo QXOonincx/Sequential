@@ -54,6 +54,88 @@ const AboutSection: React.FC = () => {
 
   const [hideScrollHint, setHideScrollHint] = useState(false);
 
+  // ======================================================
+  // Typewriter (rotating endings) — endings get faded logo color in CSS
+  // ======================================================
+  const TYPE_BASE = "Wij geloven in digitale oplossingen die";
+  const TYPE_ENDINGS = useMemo(
+    () => ["simpel zijn.", "krachtig zijn.", "impact maken.", "echt werken."],
+    []
+  );
+
+  const [twEnding, setTwEnding] = useState<string>(""); // only the animated part
+  const [twReduceMotion, setTwReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setTwReduceMotion(!!mq.matches);
+    apply();
+    mq.addEventListener?.("change", apply);
+    return () => mq.removeEventListener?.("change", apply);
+  }, []);
+
+  useEffect(() => {
+    if (twReduceMotion) {
+      setTwEnding(TYPE_ENDINGS[0]);
+      return;
+    }
+
+    let isMounted = true;
+
+    let endingIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    const typeSpeed = 34; // ms per char
+    const deleteSpeed = 22;
+    const pauseAfterType = 1050;
+    const pauseAfterDelete = 280;
+
+    const tick = () => {
+      if (!isMounted) return;
+
+      const ending = TYPE_ENDINGS[endingIndex];
+
+      if (!deleting) {
+        charIndex += 1;
+        setTwEnding(ending.slice(0, charIndex));
+
+        if (charIndex >= ending.length) {
+          window.setTimeout(() => {
+            deleting = true;
+            tick();
+          }, pauseAfterType);
+          return;
+        }
+
+        window.setTimeout(tick, typeSpeed);
+        return;
+      }
+
+      // deleting
+      charIndex -= 1;
+      setTwEnding(ending.slice(0, Math.max(0, charIndex)));
+
+      if (charIndex <= 0) {
+        deleting = false;
+        endingIndex = (endingIndex + 1) % TYPE_ENDINGS.length;
+
+        window.setTimeout(tick, pauseAfterDelete);
+        return;
+      }
+
+      window.setTimeout(tick, deleteSpeed);
+    };
+
+    // start
+    setTwEnding("");
+    window.setTimeout(tick, 240);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [TYPE_ENDINGS, twReduceMotion]);
+
   // Keep visible[] length in sync (safe even if cards never changes length)
   useEffect(() => {
     setVisible((prev) => {
@@ -162,24 +244,13 @@ const AboutSection: React.FC = () => {
         <main>
           <section className="sq-section sq-about-page">
             <div className="sq-container">
-              {/* ===== DIAGONAL MARQUEE ===== */}
-              <div className="sq-about-marqueeWrap" aria-hidden="true">
-                <div className="sq-about-marqueeSkew">
-                  <div className="sq-about-marqueeTrack">
-                    <span className="sq-about-marqueeText">
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —
-                    </span>
-                    <span className="sq-about-marqueeText">
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —{" "}
-                      {t("about.title")} — {t("about.title")} —
-                    </span>
-                  </div>
-                </div>
+              {/* ===== TYPEWRITER HEADLINE ===== */}
+              <div className="sq-about-typewriterWrap">
+                <p className="sq-about-typewriter" aria-live="polite">
+                  <span className="sq-about-typewriter-base">{TYPE_BASE} </span>
+                  <span className="sq-about-typewriter-ending">{twEnding}</span>
+                  <span className="sq-about-caret" aria-hidden="true" />
+                </p>
               </div>
 
               {/* ===== INTRO ===== */}
