@@ -280,6 +280,7 @@ const Process: React.FC = () => {
                 </ol>
               </div>
             </div>
+            <br />
           </section>
         </main>
 
