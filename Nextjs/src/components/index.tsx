@@ -105,7 +105,8 @@ const HomePage: React.FC = () => {
                 <p className="sq-kicker">{t("hero.kicker")}</p>
                 <h1>
                   <Trans i18nKey="hero.title">
-                    Websites die er <span className="sq-highlight">strak</span> uitzien en converteren.
+                    Websites die er <span className="sq-highlight">strak</span>{" "}
+                    uitzien en converteren.
                   </Trans>
                 </h1>
                 <p className="sq-hero-subtitle">{t("hero.subtitle")}</p>
@@ -175,11 +176,17 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              <br />
+              {/* ✅ Extra tekstblok onderaan bij Diensten */}
+              <div className="sq-process-outro" style={{ marginTop: "2rem" }}>
+                <h3>{t("services.outro.title")}</h3>
+                <p>{t("services.outro.text")}</p>
+              </div>
 
-              <Link href="/onze-diensten" className="sq-btn sq-btn-primary">
-                {t("services.link")}
-              </Link>
+              <div style={{ marginTop: "1.25rem" }}>
+                <Link href="/onze-diensten" className="sq-btn sq-btn-primary">
+                  {t("services.link")}
+                </Link>
+              </div>
             </div>
           </section>
 
@@ -258,7 +265,9 @@ const HomePage: React.FC = () => {
                 <p className="sq-contact-note">
                   <Trans i18nKey="contact.note">
                     Liever mailen? Stuur ons een bericht via{" "}
-                    <a href="mailto:info@sequentialwebsites.com">info@sequentialwebsites.com</a>
+                    <a href="mailto:info@sequentialwebsites.com">
+                      info@sequentialwebsites.com
+                    </a>
                   </Trans>
                 </p>
               </div>
