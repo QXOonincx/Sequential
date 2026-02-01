@@ -15,7 +15,8 @@ type AboutCard = {
 };
 
 const AboutSection: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage ?? i18n.language;
 
   const cards: AboutCard[] = useMemo(
     () => [
@@ -44,27 +45,43 @@ const AboutSection: React.FC = () => {
         icon: <Zap className="sq-about-icon-svg" aria-hidden="true" />,
       },
     ],
-    [t]
+    [lang, t]
   );
 
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [visible, setVisible] = useState<boolean[]>(() =>
-    cards.map(() => false)
-  );
-
+  const [visible, setVisible] = useState<boolean[]>(() => cards.map(() => false));
   const [hideScrollHint, setHideScrollHint] = useState(false);
 
   // ======================================================
-  // Typewriter (rotating endings) — endings get faded logo color in CSS
+  // Typewriter (does NOT reset on language switch)
   // ======================================================
-  const TYPE_BASE = "Wij geloven in digitale oplossingen die";
+  const TYPE_BASE = t("about.tekst.type.writer");
+
   const TYPE_ENDINGS = useMemo(
-    () => ["simpel zijn.", "krachtig zijn.", "impact maken.", "echt werken."],
-    []
+    () => [
+      t("about.type.writer.option.1"),
+      t("about.type.writer.option.2"),
+      t("about.type.writer.option.3"),
+      t("about.type.writer.option.4"),
+    ],
+    [lang, t]
   );
 
-  const [twEnding, setTwEnding] = useState<string>(""); // only the animated part
+  const [twEnding, setTwEnding] = useState<string>("");
   const [twReduceMotion, setTwReduceMotion] = useState(false);
+
+  // Persist animation state across re-renders AND language switches
+  const endingIndexRef = useRef(0);
+  const charIndexRef = useRef(0);
+  const deletingRef = useRef(false);
+  const timeoutRef = useRef<number | null>(null);
+
+  const clearTimer = () => {
+    if (timeoutRef.current != null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -74,17 +91,28 @@ const AboutSection: React.FC = () => {
     return () => mq.removeEventListener?.("change", apply);
   }, []);
 
+  // If reduced motion: show a static ending (current index), no reset
   useEffect(() => {
-    if (twReduceMotion) {
-      setTwEnding(TYPE_ENDINGS[0]);
-      return;
-    }
+    if (!twReduceMotion) return;
+
+    clearTimer();
+
+    const len = Math.max(1, TYPE_ENDINGS.length);
+    const idx = ((endingIndexRef.current % len) + len) % len;
+    const ending = TYPE_ENDINGS[idx] ?? "";
+
+    // Clamp char index to avoid out-of-range when language changes
+    charIndexRef.current = Math.min(charIndexRef.current, ending.length);
+    setTwEnding(ending);
+
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [twReduceMotion, TYPE_ENDINGS]);
+
+  useEffect(() => {
+    if (twReduceMotion) return;
 
     let isMounted = true;
-
-    let endingIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
 
     const typeSpeed = 34; // ms per char
     const deleteSpeed = 22;
@@ -94,46 +122,55 @@ const AboutSection: React.FC = () => {
     const tick = () => {
       if (!isMounted) return;
 
-      const ending = TYPE_ENDINGS[endingIndex];
+      const len = Math.max(1, TYPE_ENDINGS.length);
+      const idx = ((endingIndexRef.current % len) + len) % len;
+      const ending = TYPE_ENDINGS[idx] ?? "";
 
-      if (!deleting) {
-        charIndex += 1;
-        setTwEnding(ending.slice(0, charIndex));
+      // Clamp char index in case the new language string is shorter
+      if (charIndexRef.current > ending.length) {
+        charIndexRef.current = ending.length;
+      }
 
-        if (charIndex >= ending.length) {
-          window.setTimeout(() => {
-            deleting = true;
+      if (!deletingRef.current) {
+        charIndexRef.current += 1;
+        setTwEnding(ending.slice(0, charIndexRef.current));
+
+        if (charIndexRef.current >= ending.length) {
+          timeoutRef.current = window.setTimeout(() => {
+            deletingRef.current = true;
             tick();
           }, pauseAfterType);
           return;
         }
 
-        window.setTimeout(tick, typeSpeed);
+        timeoutRef.current = window.setTimeout(tick, typeSpeed);
         return;
       }
 
       // deleting
-      charIndex -= 1;
-      setTwEnding(ending.slice(0, Math.max(0, charIndex)));
+      charIndexRef.current -= 1;
+      setTwEnding(ending.slice(0, Math.max(0, charIndexRef.current)));
 
-      if (charIndex <= 0) {
-        deleting = false;
-        endingIndex = (endingIndex + 1) % TYPE_ENDINGS.length;
+      if (charIndexRef.current <= 0) {
+        deletingRef.current = false;
+        endingIndexRef.current = (endingIndexRef.current + 1) % len;
 
-        window.setTimeout(tick, pauseAfterDelete);
+        timeoutRef.current = window.setTimeout(tick, pauseAfterDelete);
         return;
       }
 
-      window.setTimeout(tick, deleteSpeed);
+      timeoutRef.current = window.setTimeout(tick, deleteSpeed);
     };
 
-    // start
-    setTwEnding("");
-    window.setTimeout(tick, 240);
+    // IMPORTANT: do NOT reset refs or twEnding here
+    clearTimer();
+    timeoutRef.current = window.setTimeout(tick, 0);
 
     return () => {
       isMounted = false;
+      clearTimer();
     };
+    // Re-run when endings change (language switch), but state is preserved via refs
   }, [TYPE_ENDINGS, twReduceMotion]);
 
   // Keep visible[] length in sync (safe even if cards never changes length)
@@ -186,7 +223,7 @@ const AboutSection: React.FC = () => {
       if (timer) window.clearTimeout(timer);
       if (obs) obs.disconnect();
     };
-  }, []); // ✅ constant deps
+  }, []);
 
   /* ======================================================
      Keep scroll cue visible until LAST card is ~fully visible
@@ -227,7 +264,7 @@ const AboutSection: React.FC = () => {
       if (timer) window.clearTimeout(timer);
       if (obs) obs.disconnect();
     };
-  }, []); // ✅ constant deps
+  }, []);
 
   const scrollDownOne = () => {
     window.scrollBy({
@@ -268,10 +305,7 @@ const AboutSection: React.FC = () => {
                     ref={(node) => {
                       itemRefs.current[i] = node;
                     }}
-                    className={[
-                      "sq-about-row",
-                      visible[i] ? "is-visible" : "",
-                    ].join(" ")}
+                    className={["sq-about-row", visible[i] ? "is-visible" : ""].join(" ")}
                     style={
                       {
                         ["--row-accent" as any]:
@@ -312,19 +346,14 @@ const AboutSection: React.FC = () => {
             </div>
 
             {/* ===== SCROLL CUE ===== */}
-            <div
-              className={[
-                "sq-scrollCue",
-                hideScrollHint ? "is-hidden" : "",
-              ].join(" ")}
-            >
+            <div className={["sq-scrollCue", hideScrollHint ? "is-hidden" : ""].join(" ")}>
               <button
                 className="sq-scrollCue-btn"
                 type="button"
                 onClick={scrollDownOne}
                 aria-label="Scroll naar beneden"
               >
-                <span className="sq-scrollCue-text">Scroll om meer te zien</span>
+                <span className="sq-scrollCue-text">{t("about.scroll.tekst")}</span>
                 <span className="sq-scrollCue-icon" aria-hidden="true">
                   <ChevronDown size={18} />
                 </span>
