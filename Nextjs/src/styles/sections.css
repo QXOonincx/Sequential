@@ -146,8 +146,11 @@
 }
 
 .sq-section-header h2 {
-  font-size: 1.6rem;
-  margin-bottom: 0.4rem;
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  opacity: 0.92;
 }
 
 .sq-section-header p {
