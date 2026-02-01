@@ -28,16 +28,20 @@
 
   --sq-tl-start: 0px;
   --sq-tl-end: 100%;
+  --sq-tl-x: 50%;
 }
 
 /* timeline line */
 .sq-timeline-line {
   position: absolute;
-  left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+
+  /* always align line through dot center */
+  left: var(--sq-tl-x, 50%);
   transform: translateX(-50%);
+  width: 2px;
+
   pointer-events: none;
   isolation: isolate;
 }
@@ -79,6 +83,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
 }
 
 /* Card */
@@ -125,7 +130,7 @@
   transition: 180ms ease;
 }
 
-/* ✅ stays green once passed */
+/* stays green once passed */
 .sq-tl-item.is-active .sq-tl-dot,
 .sq-tl-item.is-reached .sq-tl-dot {
   background: #22c55e;
@@ -133,7 +138,7 @@
   box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.18);
 }
 
-/* Titles next to the line */
+/* Titles next to the line (DESKTOP) */
 .sq-tl-step-title {
   position: absolute;
   top: 50%;
@@ -156,6 +161,50 @@
   text-align: right;
 }
 
+/* ============ TABLET FIX (center title on the line) ============ */
+@media (max-width: 1150px) {
+  /* create space above the row for the floating title */
+  .sq-tl-item {
+    padding-top: 34px;          /* space for the title */
+    align-items: start;
+  }
+
+  /* title floats and is centered on the timeline line */
+  .sq-tl-step-title {
+    position: absolute;
+    top: 0;
+    right: var(--sq-tl-x, 200%);  /* ✅ center on the timeline line */
+    transform: translate(-50%, 0);
+
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.25;
+    white-space: nowrap;        /* keep it on one line like your screenshot */
+    text-align: center;
+    max-width: 90%;
+  }
+
+  /* title centered above its card */
+  .sq-tl-left .sq-tl-step-title,
+  .sq-tl-right .sq-tl-step-title {
+    position: absolute;
+    top: 0;
+
+    /* center relative to the CARD, not the line */
+    left: 50%;
+    right: var(--sq-tl-x, 50%);
+    transform: translateX(-50%);
+
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.25;
+    white-space: nowrap;
+    text-align: center;
+    max-width: 90%;
+  }
+}
+
+
 /* ============ MOBILE ============ */
 
 @media (max-width: 900px) {
@@ -169,18 +218,26 @@
 
   .sq-tl-item {
     grid-template-columns: 30px 1fr;
+    grid-template-rows: auto 1fr;
     gap: 14px;
   }
 
+  /* line stays perfectly aligned with dots */
   .sq-timeline-line {
-    left: 15px;
-    transform: none;
+    left: var(--sq-tl-x, 15px);
+    transform: translateX(-50%);
   }
 
   .sq-tl-marker {
-    left: 15px;
+    position: relative;
+    left: auto;
     width: 30px;
     transform: none;
+    grid-column: 1;
+  }
+
+  .sq-tl-dot {
+    left: 50%;
   }
 
   .sq-tl-left .sq-tl-card,
@@ -189,11 +246,7 @@
   }
 
   .sq-tl-step-title {
-    position: relative;
-    top: auto;
-    transform: none;
+    font-size: 17px;
     margin-bottom: 6px;
-    font-size: 18px;
-    text-align: left !important;
   }
 }

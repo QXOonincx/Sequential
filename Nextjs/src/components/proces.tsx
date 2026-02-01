@@ -1,14 +1,9 @@
 "use client";
 
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import "@/styles/index.css";
 import "@/styles/dots.css";
+import "@/styles/proces-style.css";
 import { useTranslation } from "react-i18next";
 
 type Step = {
@@ -19,8 +14,7 @@ type Step = {
   list: string[];
 };
 
-const clamp = (v: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, v));
+const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
 const Process: React.FC = () => {
   const { t } = useTranslation();
@@ -72,12 +66,8 @@ const Process: React.FC = () => {
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  const [inCenter, setInCenter] = useState<boolean[]>(() =>
-    steps.map(() => false)
-  );
-  const [reached, setReached] = useState<boolean[]>(() =>
-    steps.map(() => false)
-  );
+  const [inCenter, setInCenter] = useState<boolean[]>(() => steps.map(() => false));
+  const [reached, setReached] = useState<boolean[]>(() => steps.map(() => false));
 
   // --- helpers ---
   const setTimelineRange = () => {
@@ -89,19 +79,19 @@ const Process: React.FC = () => {
     if (!firstDot || !lastDot) return;
 
     const tlRect = tl.getBoundingClientRect();
+    const firstRect = firstDot.getBoundingClientRect();
+    const lastRect = lastDot.getBoundingClientRect();
 
-    const startPx =
-      firstDot.getBoundingClientRect().top +
-      firstDot.offsetHeight / 2 -
-      tlRect.top;
+    // Y: center of first/last dot relative to timeline
+    const startPx = firstRect.top + firstRect.height / 2 - tlRect.top;
+    const endPx = lastRect.top + lastRect.height / 2 - tlRect.top;
 
-    const endPx =
-      lastDot.getBoundingClientRect().top +
-      lastDot.offsetHeight / 2 -
-      tlRect.top;
+    // ✅ X: center of dot column relative to timeline (so line goes THROUGH dots)
+    const xPx = firstRect.left + firstRect.width / 2 - tlRect.left;
 
     tl.style.setProperty("--sq-tl-start", `${startPx}px`);
     tl.style.setProperty("--sq-tl-end", `${endPx}px`);
+    tl.style.setProperty("--sq-tl-x", `${xPx}px`);
   };
 
   const updateFillAndReached = () => {
@@ -113,8 +103,7 @@ const Process: React.FC = () => {
 
     const styles = getComputedStyle(tl);
     const startPx = parseFloat(styles.getPropertyValue("--sq-tl-start")) || 0;
-    const endPx =
-      parseFloat(styles.getPropertyValue("--sq-tl-end")) || rect.height;
+    const endPx = parseFloat(styles.getPropertyValue("--sq-tl-end")) || rect.height;
 
     const range = Math.max(1, endPx - startPx);
     const raw = (triggerY - (rect.top + startPx)) / range;
@@ -170,7 +159,7 @@ const Process: React.FC = () => {
     };
   }, [steps]);
 
-  // scroll → lijn + reached
+  // scroll → fill + reached
   useEffect(() => {
     let raf = 0;
 
@@ -190,7 +179,7 @@ const Process: React.FC = () => {
     };
   }, [steps]);
 
-  // kaart in het midden
+  // card in the center
   useEffect(() => {
     const nodes = itemRefs.current.filter(Boolean) as HTMLLIElement[];
     if (!nodes.length) return;
@@ -224,9 +213,8 @@ const Process: React.FC = () => {
               <div className="sq-process-intro-block">
                 <h2>Zo ziet ons website-traject eruit</h2>
                 <p>
-                  Van eerste idee tot livegang: we begeleiden je stap voor stap
-                  naar een website die klopt, converteert en meegroeit met je
-                  ambities.
+                  Van eerste idee tot livegang: we begeleiden je stap voor stap naar een website
+                  die klopt, converteert en meegroeit met je ambities.
                 </p>
               </div>
 
@@ -238,16 +226,16 @@ const Process: React.FC = () => {
                 <ol className="sq-timeline-list">
                   {steps.map((s, i) => {
                     const side = i % 2 === 0 ? "left" : "right";
-                    const isActive = inCenter[i] && reached[i]; // (optional) only when centered
-                    const isReached = reached[i]; // ✅ stays true after passing the dot
+                    const isActive = inCenter[i] && reached[i];
+                    const isReached = reached[i];
 
                     return (
                       <li
                         key={s.n}
                         data-index={i}
-                        className={`sq-tl-item sq-tl-${side} ${
-                          isActive ? "is-active" : ""
-                        } ${isReached ? "is-reached" : ""}`}
+                        className={`sq-tl-item sq-tl-${side} ${isActive ? "is-active" : ""} ${
+                          isReached ? "is-reached" : ""
+                        }`}
                         ref={(node) => {
                           itemRefs.current[i] = node;
                         }}
@@ -280,6 +268,7 @@ const Process: React.FC = () => {
                 </ol>
               </div>
             </div>
+
             <br />
           </section>
         </main>
