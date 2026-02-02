@@ -1,23 +1,86 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import "@/styles/index.css";
 import Link from "next/link";
-// import NavBar from "./NavBar";
 import ContactForm from "./ContactForm";
 import { useTranslation, Trans } from "react-i18next";
-// import { Helmet } from "react-helmet-async";
+
+import {
+  Monitor,
+  UserRound,
+  LayoutTemplate,
+  RefreshCw,
+  Sparkles,
+  Settings,
+  Rocket,
+} from "lucide-react";
+
+type HomeService = {
+  key: string;
+  titleKey: string;
+  summaryKey: string;
+  icon: React.ReactNode;
+};
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
+  const services: HomeService[] = useMemo(
+    () => [
+      {
+        key: "service1",
+        titleKey: "services.service1.title",
+        summaryKey: "services.service1.summary",
+        icon: <Monitor size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service2",
+        titleKey: "services.service2.title",
+        summaryKey: "services.service2.summary",
+        icon: <UserRound size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service3",
+        titleKey: "services.service3.title",
+        summaryKey: "services.service3.summary",
+        icon: <LayoutTemplate size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service4",
+        titleKey: "services.service4.title",
+        summaryKey: "services.service4.summary",
+        icon: <RefreshCw size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service5",
+        titleKey: "services.service5.title",
+        summaryKey: "services.service5.summary",
+        icon: <Sparkles size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service6",
+        titleKey: "services.service6.title",
+        summaryKey: "services.service6.summary",
+        icon: <Settings size={18} aria-hidden="true" />,
+      },
+      {
+        key: "service7",
+        titleKey: "services.service7.title",
+        summaryKey: "services.service7.summary",
+        icon: <Rocket size={18} aria-hidden="true" />,
+      },
+    ],
+    []
+  );
+
   return (
     <>
-      {/* Full-page animated background (no cards / no extra sections needed) */}
+      {/* Page-scoped styling for the horizontal services row */}
+
+      {/* Full-page animated background */}
       <div className="sq-bg" aria-hidden="true">
-        {/* Soft glows + vignette */}
         <div className="sq-bg-glow" />
-        {/* Moving topo lines */}
         <svg
           className="sq-topo"
           viewBox="0 0 1400 900"
@@ -25,7 +88,6 @@ const HomePage: React.FC = () => {
           focusable="false"
         >
           <defs>
-            {/* Animated turbulence warp (remove seed animation to prevent jumps) */}
             <filter id="warp">
               <feTurbulence
                 type="fractalNoise"
@@ -59,7 +121,6 @@ const HomePage: React.FC = () => {
             </filter>
           </defs>
 
-          {/* Layer A */}
           <g
             className="layer-a"
             filter="url(#warp)"
@@ -74,7 +135,6 @@ const HomePage: React.FC = () => {
             <path d="M-80,760 C120,690 260,760 420,700 C620,620 780,790 940,760 C1100,740 1220,680 1380,720 C1540,770 1660,760 1800,700" />
           </g>
 
-          {/* Layer B */}
           <g
             className="layer-b"
             filter="url(#warp)"
@@ -89,14 +149,10 @@ const HomePage: React.FC = () => {
           </g>
         </svg>
 
-        {/* Subtle noise */}
         <div className="sq-bg-noise" />
       </div>
 
       <div className="sq-root">
-        {/* <Helmet> ... </Helmet> */}
-        {/* <NavBar /> */}
-
         <main>
           {/* Hero */}
           <section className="sq-hero">
@@ -145,43 +201,39 @@ const HomePage: React.FC = () => {
                 <p>{t("services.subtitle")}</p>
               </div>
 
-              <div className="sq-grid-3">
-                <div className="sq-card">
-                  <h3>{t("services.cards.business.title")}</h3>
-                  <p>{t("services.service1.kopje")}</p>
-                  <ul className="sq-card-list">
-                    <li>{t("services.cards.business.list.1")}</li>
-                    <li>{t("services.cards.business.list.2")}</li>
-                    <li>{t("services.cards.business.list.3")}</li>
-                  </ul>
-                </div>
+              <div className="sq-services-scroll">
+                <div className="sq-services-fade left" aria-hidden="true" />
+                <div className="sq-services-fade right" aria-hidden="true" />
 
-                <div className="sq-card">
-                  <h3>{t("services.cards.landing.title")}</h3>
-                  <p>{t("services.service2.kopje")}</p>
-                  <ul className="sq-card-list">
-                    <li>{t("services.cards.landing.list.1")}</li>
-                    <li>{t("services.cards.landing.list.2")}</li>
-                  </ul>
-                </div>
+                <div className="sq-services-row" role="list">
+                  {services.map((s) => (
+                    <div
+                      key={s.key}
+                      className="sq-card sq-services-item"
+                      role="listitem"
+                    >
+                      <div className="sq-home-service-head">
+                        <span className="sq-home-service-icon">{s.icon}</span>
+                        <h3 className="sq-home-service-title">
+                          {t(s.titleKey)}
+                        </h3>
+                      </div>
 
-                <div className="sq-card">
-                  <h3>{t("services.cards.redesign.title")}</h3>
-                  <p>{t("services.service3.kopje")}</p>
-                  <ul className="sq-card-list">
-                    <li>{t("services.cards.redesign.list.1")}</li>
-                    <li>{t("services.cards.redesign.list.2")}</li>
-                    <li>{t("services.cards.redesign.list.3")}</li>
-                  </ul>
+                      <p className="sq-home-service-summary">
+                        {t(s.summaryKey)}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
+
+              <p>{t("services.scrollHint")}</p>
 
               {/* ✅ Extra tekstblok onderaan bij Diensten */}
               <div className="sq-process-outro" style={{ marginTop: "2rem" }}>
                 <h3>{t("services.outro.title")}</h3>
                 <p>{t("services.outro.text")}</p>
               </div>
-
               <div style={{ marginTop: "1.25rem" }}>
                 <Link href="/onze-diensten" className="sq-btn sq-btn-primary">
                   {t("services.link")}

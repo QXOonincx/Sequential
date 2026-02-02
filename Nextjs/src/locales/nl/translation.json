@@ -109,6 +109,8 @@
 
   "services.link": "Lees meer →",
 
+  "services.scrollHint": "Scroll om alle diensten te bekijken →",
+  
   "process.title": "Ons proces",
   "process.subtitle": "Een helder en eenvoudig traject, zodat je altijd weet wat de volgende stap is.",
   "process.step1.title": "Ontdekking & benodigheden",

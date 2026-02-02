@@ -36,6 +36,8 @@
   "services.service1.list.3": "Scalable: easy to expand with new pages",
   "services.service1.list.4": "Mobile-friendly, fast, and built cleanly",
 
+  "services.scrollHint": "Scroll to see al services →",
+
   "services.service2.title": "Personal websites",
   "services.service2.kopje": "Professional, but personal",
   "services.service2.summary": "A personal website that presents your expertise and story in a professional way.",
