@@ -1,3 +1,37 @@
+/* =========================================================
+   Scroll Reveal (fade-in like About page)
+   - Add .sq-reveal to blocks
+   - Toggle .is-visible via IntersectionObserver
+   ========================================================= */
+
+.sq-reveal {
+  opacity: 0;
+  transform: translateY(26px) scale(0.985);
+  filter: blur(6px);
+  transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.sq-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+  filter: blur(0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sq-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
+/* =======================
+   YOUR EXISTING CSS BELOW
+   (unchanged)
+======================= */
+
 .sq-section-alt {
   background: radial-gradient(circle at top, #020617, #020617 50%, #000 100%);
 }
@@ -139,7 +173,6 @@
   }
 }
 
-
 .sq-section-header {
   max-width: 36rem;
   margin-bottom: 2.2rem;
@@ -279,7 +312,6 @@
 
 /* =========================================================
    Homepage – Horizontal Services Scroll
-   (Merged: old CSS + the CSS that was inside the HomePage <style jsx global>)
    ========================================================= */
 
 .sq-services-scroll {
@@ -317,24 +349,22 @@
   border-radius: 999px;
 }
 
-/* Individual service card inside the row
-   ✅ matches the latest homepage: fixed width so text wraps and cards stay compact */
+/* Individual service card inside the row */
 .sq-services-item {
   flex: 0 0 auto;
-  width: 320px; /* compact like earlier */
+  width: 320px;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
 }
 
-/* Edge fade overlays (left & right)
-   ✅ matches the latest homepage (slimmer + softer) */
+/* Edge fade overlays (left & right) */
 .sq-services-fade {
   pointer-events: none;
   position: absolute;
   top: 0;
-  bottom: 14px; /* leaves room for scrollbar */
-  width: 36px; /* slimmer */
+  bottom: 14px;
+  width: 36px;
   z-index: 2;
 }
 
@@ -356,7 +386,7 @@
   );
 }
 
-/* Card head like on your diensten overview */
+/* Card head */
 .sq-home-service-head {
   display: flex;
   align-items: center;
@@ -378,7 +408,7 @@
   flex: 0 0 auto;
 }
 
-/* Title wraps nicely instead of stretching the card */
+/* Title wraps nicely */
 .sq-home-service-title {
   margin: 0;
   min-width: 0;
@@ -386,7 +416,7 @@
   word-break: break-word;
 }
 
-/* Summary wraps normally and doesn't force larger cards */
+/* Summary wraps normally */
 .sq-home-service-summary {
   margin: 0.25rem 0 0;
   color: var(--sq-muted);
@@ -396,7 +426,7 @@
   word-break: break-word;
 }
 
-/* Scroll hint text below the row (keep if you still use it somewhere) */
+/* Scroll hint text */
 .sq-services-hint {
   margin-top: 0.7rem;
   color: var(--sq-muted);
@@ -414,7 +444,7 @@
   }
 }
 
-/* Responsive grids (kept from your old CSS snippet) */
+/* Responsive grids */
 @media (min-width: 768px) {
   .sq-grid-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
