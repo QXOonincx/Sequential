@@ -211,11 +211,8 @@ const Process: React.FC = () => {
           <section className="sq-section sq-process">
             <div className="sq-container">
               <div className="sq-process-intro-block">
-                <h2>Zo ziet ons website-traject eruit</h2>
-                <p>
-                  Van eerste idee tot livegang: we begeleiden je stap voor stap naar een website
-                  die klopt, converteert en meegroeit met je ambities.
-                </p>
+                <h2>{t("process.header")}</h2>
+                <p>{t("process.inleiding")}</p>
               </div>
 
               <div ref={timelineRef} className="sq-timeline">

@@ -9,10 +9,10 @@
 /* ==== Process page ==== */
 
 .sq-process-intro {
-  max-width: 40rem;
-  margin-bottom: 2.5rem;
-  color: var(--sq-muted);
-  font-size: 0.95rem;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  opacity: 0.88;
 }
 
 #contact.sq-section-alt {
@@ -154,7 +154,10 @@
 }
 
 .sq-section-header p {
-  color: var(--sq-muted);
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  opacity: 0.88;
 }
 
 /* Cards / grid */
