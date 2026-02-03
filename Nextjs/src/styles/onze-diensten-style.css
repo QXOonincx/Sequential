@@ -1,6 +1,11 @@
 /* ===============================
    SERVICES GRID
 ================================ */
+:root {
+  --nav-h: 72px; /* fallback, overwritten by JS */
+  --popup-gap: 36px; /* makes popup sit lower than navbar */
+}
+
 .sq-services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -46,10 +51,7 @@
   cursor: pointer;
   z-index: 1;
 
-  transition:
-    transform 220ms ease,
-    opacity 220ms ease,
-    filter 220ms ease,
+  transition: transform 220ms ease, opacity 220ms ease, filter 220ms ease,
     border-color 220ms ease;
 }
 
@@ -82,27 +84,20 @@
   opacity: 0;
   transition: opacity 260ms ease;
 
-  background-image:
-    radial-gradient(
+  background-image: radial-gradient(
       600px 420px at 20% 25%,
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 22%, transparent),
       transparent 60%
     ),
-    radial-gradient(
-      680px 460px at 80% 30%,
-      rgba(255, 255, 255, 0.08),
-      transparent 62%
-    ),
+    radial-gradient(680px 460px at 80% 30%, rgba(255, 255, 255, 0.08), transparent
+          62%),
     radial-gradient(
       620px 440px at 55% 85%,
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 14%, transparent),
       transparent 62%
     ),
-    radial-gradient(
-      900px 620px at 50% 15%,
-      rgba(255, 255, 255, 0.04),
-      transparent 70%
-    );
+    radial-gradient(900px 620px at 50% 15%, rgba(255, 255, 255, 0.04), transparent
+          70%);
 
   background-size: 140% 140%, 160% 160%, 150% 150%, 100% 100%;
   background-position: 0% 0%, 100% 0%, 50% 100%, 50% 0%;
@@ -122,12 +117,8 @@
   opacity: 0;
   transition: opacity 260ms ease;
 
-  background-image:
-    radial-gradient(
-      520px 380px at 35% 60%,
-      rgba(255, 255, 255, 0.05),
-      transparent 65%
-    ),
+  background-image: radial-gradient(520px 380px at 35% 60%, rgba(255, 255, 255, 0.05), transparent
+          65%),
     radial-gradient(
       520px 380px at 70% 55%,
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 10%, transparent),
@@ -204,7 +195,8 @@
   z-index: 1;
   padding: 2px;
 
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
@@ -269,8 +261,14 @@
 }
 
 /* ===============================
-   EXPANDED CARD (MAGIC)
+   EXPANDED CARD (MAGIC) ✅ FIXED
+   - NO fixed height
+   - auto fits content (no empty space)
+   - sits LOWER than navbar
+   - no internal scrolling popup
 ================================ */
+
+/* open animation start (from card position) */
 .sq-service-card.is-expanded {
   position: fixed;
   top: var(--from-top);
@@ -286,28 +284,37 @@
   opacity: 1 !important;
   filter: none !important;
 
-  transition:
-    top 240ms ease,
-    left 240ms ease,
-    width 240ms ease,
-    height 240ms ease,
-    transform 240ms ease,
-    border-color 240ms ease;
+  transition: top 240ms ease, left 240ms ease, width 240ms ease,
+    height 240ms ease, transform 240ms ease, border-color 240ms ease;
 }
 
+/* final position + final size (fit content) */
 .sq-service-card.is-expanded {
-  top: 10vh;
+  top: 35%;
   left: 50%;
   transform: translateX(-50%);
-  width: min(920px, 92vw);
-  height: min(78vh, 820px);
+
+  /* ✅ width behaves like "box around content" but still responsive */
+  width: max-content;
+  max-width: min(920px, 92vw);
+  min-width: min(520px, 92vw);
+
+  /* ✅ height only as much as needed (no empty space) */
+  height: fit-content;
+
+  /* ✅ IMPORTANT: no internal scroll */
+  overflow: visible;
+
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
 }
 
 .sq-service-card.is-expanded .sq-service-card-inner {
   height: auto;
   overflow: visible;
-  padding-top: 22px;
+
+  /* tighter padding so popup feels smaller */
+  padding: 18px;
+  padding-top: 18px;
 }
 
 /* ===============================
@@ -322,7 +329,6 @@
 
 /* ✅ Icon badge (PERFECT CIRCLE FIX) */
 .sq-service-icon {
-  /* lock it so flex cannot stretch it */
   flex: 0 0 34px;
   width: 34px;
   height: 34px;
@@ -334,14 +340,12 @@
   justify-content: center;
   box-sizing: border-box;
 
-  /* prevent font/line-height influence */
   line-height: 1;
 
   background: color-mix(in srgb, var(--card-color) 18%, transparent);
   border: 1px solid color-mix(in srgb, var(--card-color) 35%, transparent);
 }
 
-/* icon itself */
 .sq-service-icon-svg {
   width: 18px;
   height: 18px;
@@ -349,7 +353,6 @@
   transition: color 220ms ease, transform 220ms ease, filter 220ms ease;
 }
 
-/* Hover/popup: icon becomes accent + tiny lift */
 .sq-service-card.is-hovered:not(.is-expanded) .sq-service-icon-svg,
 .sq-service-card.is-expanded .sq-service-icon-svg {
   color: var(--card-color);
@@ -408,12 +411,8 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
 
-  transition:
-    transform 180ms ease,
-    background 180ms ease,
-    border-color 180ms ease,
-    filter 180ms ease,
-    color 180ms ease;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease,
+    filter 180ms ease, color 180ms ease;
 }
 
 .sq-service-more {
@@ -455,3 +454,12 @@
   border-color: color-mix(in srgb, var(--card-color) 55%, rgba(255, 255, 255, 0.18));
   background: color-mix(in srgb, var(--card-color) 22%, rgba(255, 255, 255, 0.08));
 }
+
+/* Mobile tweaks */
+@media (max-width: 540px) {
+  .sq-service-card.is-expanded {
+    min-width: unset;
+    width: min(92vw, 520px);
+  }
+}
+/* .sq-service-card.is-expanded */

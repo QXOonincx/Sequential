@@ -17,9 +17,9 @@ import {
 type Service = {
   n: number;
   title: string;
-  summary: string; // korte tekst op de dichte card
-  text: string; // uitgebreide tekst (alleen zichtbaar als card open is)
-  includes: string[]; // bullets (alleen zichtbaar als card open is)
+  summary: string;
+  text: string;
+  includes: string[];
   icon: React.ReactNode;
 };
 
@@ -31,9 +31,9 @@ type Rect = {
 };
 
 const CARD_COLORS = [
-  "rgb(147 109 255)", // soft brand purple
-  "rgb(96 140 255)", // logo blue
-  "rgb(92 178 230)", // blue-leaning turquoise
+  "rgb(147 109 255)",
+  "rgb(96 140 255)",
+  "rgb(92 178 230)",
 ] as const;
 
 const OnzeDiensten: React.FC = () => {
@@ -143,6 +143,34 @@ const OnzeDiensten: React.FC = () => {
   const [active, setActive] = useState<number | null>(null);
   const [activeRect, setActiveRect] = useState<Rect | null>(null);
 
+  // ✅ Navbar height -> CSS var (--nav-h)
+  useEffect(() => {
+    const getNav = () =>
+      (document.querySelector("nav") ||
+        document.querySelector("header") ||
+        document.querySelector(".navbar") ||
+        document.querySelector("#navbar")) as HTMLElement | null;
+
+    const setNavHeight = () => {
+      const nav = getNav();
+      const h = nav?.getBoundingClientRect().height ?? 0;
+      document.documentElement.style.setProperty("--nav-h", `${h}px`);
+    };
+
+    setNavHeight();
+
+    const nav = getNav();
+    const ro =
+      "ResizeObserver" in window ? new ResizeObserver(setNavHeight) : null;
+    if (ro && nav) ro.observe(nav);
+
+    window.addEventListener("resize", setNavHeight);
+    return () => {
+      window.removeEventListener("resize", setNavHeight);
+      ro?.disconnect();
+    };
+  }, []);
+
   const open = (idx: number) => {
     const el = cardRefs.current[idx];
     if (!el) return;
@@ -162,7 +190,7 @@ const OnzeDiensten: React.FC = () => {
     window.setTimeout(() => setActiveRect(null), 220);
   };
 
-  // ESC + scroll lock
+  // ESC + scroll lock (keep page stable behind backdrop)
   useEffect(() => {
     if (active === null) return;
 
@@ -211,13 +239,13 @@ const OnzeDiensten: React.FC = () => {
 
                   const style =
                     isActive && activeRect
-                      ? ( {
+                      ? ({
                           ...baseStyle,
                           ["--from-top" as any]: `${activeRect.top}px`,
                           ["--from-left" as any]: `${activeRect.left}px`,
                           ["--from-w" as any]: `${activeRect.width}px`,
                           ["--from-h" as any]: `${activeRect.height}px`,
-                        } as React.CSSProperties )
+                        } as React.CSSProperties)
                       : baseStyle;
 
                   return (
@@ -257,14 +285,12 @@ const OnzeDiensten: React.FC = () => {
                           <div>
                             <h3 className="sq-service-title">{s.title}</h3>
 
-                            {/* ✅ DICHTE CARD: alleen korte samenvatting */}
                             {!isActive && (
                               <p className="sq-service-summary">{s.summary}</p>
                             )}
                           </div>
                         </div>
 
-                        {/* ✅ UITGEBREID: alleen zichtbaar als card open is */}
                         {isActive && (
                           <div className="sq-service-body">
                             <p className="sq-service-text">{s.text}</p>
@@ -310,15 +336,12 @@ const OnzeDiensten: React.FC = () => {
                   );
                 })}
               </div>
-
             </div>
           </section>
         </main>
 
         <div
-          className={`sq-services-backdrop ${
-            active !== null ? "is-on" : ""
-          }`}
+          className={`sq-services-backdrop ${active !== null ? "is-on" : ""}`}
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) close();
           }}
