@@ -98,9 +98,9 @@ const HomePage: React.FC = () => {
   const revealRefs = useRef<(HTMLElement | null)[]>(
     Array(REVEAL_COUNT).fill(null)
   );
+
   const [visible, setVisible] = useState<boolean[]>(() => {
     const arr = Array(REVEAL_COUNT).fill(false);
-    // Hero blocks (first two nextRevealIndex() calls)
     arr[0] = true;
     arr[1] = true;
     return arr;
