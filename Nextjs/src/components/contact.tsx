@@ -38,7 +38,7 @@ export const ContactSection: React.FC = () => {
               <p>{t("contact.text")}</p>
               <p className="sq-contact-note">
                 <Trans i18nKey="contact.note">
-                  Liever mailen? Stuur ons een bericht via{" "}
+                  Liever mailen? Stuur ons een bericht via
                   <a href="mailto:info@sequentialwebsites.com">
                     info@sequentialwebsites.com
                   </a>
