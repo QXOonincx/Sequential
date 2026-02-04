@@ -101,6 +101,7 @@ const HomePage: React.FC = () => {
 
   const [visible, setVisible] = useState<boolean[]>(() => {
     const arr = Array(REVEAL_COUNT).fill(false);
+    // Hero blocks (first two nextRevealIndex() calls)
     arr[0] = true;
     arr[1] = true;
     return arr;
