@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter  } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
 import "@/styles/index.css";
+
 
 type NavItem = {
   labelKey: string;
@@ -41,10 +42,25 @@ export default function NavBar() {
     return pathname.startsWith(href);
   };
 
+  const router = useRouter();
+
+  const onLogoClick = (e: React.MouseEvent) => {
+    closeMenu();
+
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    router.push("/");
+  };
+
+
   return (
     <header className="sq-header">
       <div className="sq-container sq-header-inner">
-      <Link href="/" className="sq-logo" aria-label="Go to homepage" onClick={closeMenu}>
+      <Link href="/" className="sq-logo" aria-label="Go to homepage" onClick={onLogoClick}>
       <Image
         src="/d.png"
         alt="Sequential"
