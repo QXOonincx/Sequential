@@ -139,6 +139,8 @@ const OnzeDiensten: React.FC = () => {
   );
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const innerRefs = useRef<(HTMLDivElement | null)[]>([]); // ✅ NEW
+
   const [hovered, setHovered] = useState<number | null>(null);
   const [active, setActive] = useState<number | null>(null);
   const [activeRect, setActiveRect] = useState<Rect | null>(null);
@@ -182,7 +184,14 @@ const OnzeDiensten: React.FC = () => {
       width: r.width,
       height: r.height,
     });
+
     setActive(idx);
+
+    // ✅ NEW: zodra open, zet scroll van popup content terug naar boven
+    window.requestAnimationFrame(() => {
+      const inner = innerRefs.current[idx];
+      if (inner) inner.scrollTop = 0;
+    });
   };
 
   const close = () => {
@@ -239,13 +248,13 @@ const OnzeDiensten: React.FC = () => {
 
                   const style =
                     isActive && activeRect
-                      ? ({
+                      ? ( {
                           ...baseStyle,
                           ["--from-top" as any]: `${activeRect.top}px`,
                           ["--from-left" as any]: `${activeRect.left}px`,
                           ["--from-w" as any]: `${activeRect.width}px`,
                           ["--from-h" as any]: `${activeRect.height}px`,
-                        } as React.CSSProperties)
+                        } as React.CSSProperties )
                       : baseStyle;
 
                   return (
@@ -276,7 +285,12 @@ const OnzeDiensten: React.FC = () => {
                         <div className="sq-moving-border-spin" />
                       </div>
 
-                      <div className="sq-service-card-inner">
+                      <div
+                        className="sq-service-card-inner"
+                        ref={(el) => {
+                          innerRefs.current[idx] = el; // ✅ NEW
+                        }}
+                      >
                         <div className="sq-service-top">
                           <span className="sq-service-icon" aria-hidden="true">
                             {s.icon}
