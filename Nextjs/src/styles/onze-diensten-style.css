@@ -89,15 +89,21 @@
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 22%, transparent),
       transparent 60%
     ),
-    radial-gradient(680px 460px at 80% 30%, rgba(255, 255, 255, 0.08), transparent
-          62%),
+    radial-gradient(
+      680px 460px at 80% 30%,
+      rgba(255, 255, 255, 0.08),
+      transparent 62%
+    ),
     radial-gradient(
       620px 440px at 55% 85%,
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 14%, transparent),
       transparent 62%
     ),
-    radial-gradient(900px 620px at 50% 15%, rgba(255, 255, 255, 0.04), transparent
-          70%);
+    radial-gradient(
+      900px 620px at 50% 15%,
+      rgba(255, 255, 255, 0.04),
+      transparent 70%
+    );
 
   background-size: 140% 140%, 160% 160%, 150% 150%, 100% 100%;
   background-position: 0% 0%, 100% 0%, 50% 100%, 50% 0%;
@@ -117,8 +123,11 @@
   opacity: 0;
   transition: opacity 260ms ease;
 
-  background-image: radial-gradient(520px 380px at 35% 60%, rgba(255, 255, 255, 0.05), transparent
-          65%),
+  background-image: radial-gradient(
+      520px 380px at 35% 60%,
+      rgba(255, 255, 255, 0.05),
+      transparent 65%
+    ),
     radial-gradient(
       520px 380px at 70% 55%,
       color-mix(in srgb, var(--card-color, rgb(120 170 255)) 10%, transparent),
@@ -262,10 +271,7 @@
 
 /* ===============================
    EXPANDED CARD (MAGIC) ✅ FIXED
-   - NO fixed height
-   - auto fits content (no empty space)
-   - sits LOWER than navbar
-   - no internal scrolling popup
+   - scrolls internally when needed
 ================================ */
 
 /* open animation start (from card position) */
@@ -288,33 +294,38 @@
     height 240ms ease, transform 240ms ease, border-color 240ms ease;
 }
 
-/* final position + final size (fit content) */
+/* final position + final size (POSITION matches your reference snippet) */
 .sq-service-card.is-expanded {
   top: 35%;
   left: 50%;
   transform: translateX(-50%);
 
-  /* ✅ width behaves like "box around content" but still responsive */
   width: max-content;
   max-width: min(920px, 92vw);
   min-width: min(520px, 92vw);
 
-  /* ✅ height only as much as needed (no empty space) */
-  height: fit-content;
+  height: auto;
+  max-height: calc(100dvh - var(--nav-h, 0px) - var(--popup-gap, 36px));
 
-  /* ✅ IMPORTANT: no internal scroll */
-  overflow: visible;
+  /* ✅ IMPORTANT: card clips, inner scrolls */
+  overflow: hidden;
 
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
 }
 
+/* ✅ INNER becomes the scroll container */
 .sq-service-card.is-expanded .sq-service-card-inner {
   height: auto;
-  overflow: visible;
 
-  /* tighter padding so popup feels smaller */
   padding: 18px;
   padding-top: 18px;
+
+  max-height: calc(100dvh - var(--nav-h, 0px) - var(--popup-gap, 36px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 /* ===============================
@@ -411,8 +422,8 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
 
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease,
-    filter 180ms ease, color 180ms ease;
+  transition: transform 180ms ease, background 180ms ease,
+    border-color 180ms ease, filter 180ms ease, color 180ms ease;
 }
 
 .sq-service-more {
@@ -442,8 +453,16 @@
   padding: 8px 10px;
   border-radius: 999px;
 
-  background: color-mix(in srgb, var(--card-color) 16%, rgba(255, 255, 255, 0.06));
-  border-color: color-mix(in srgb, var(--card-color) 35%, rgba(255, 255, 255, 0.14));
+  background: color-mix(
+    in srgb,
+    var(--card-color) 16%,
+    rgba(255, 255, 255, 0.06)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--card-color) 35%,
+    rgba(255, 255, 255, 0.14)
+  );
   color: rgba(255, 255, 255, 0.92);
 }
 
@@ -451,8 +470,16 @@
   transform: scale(1.06);
   filter: brightness(1.15);
   color: rgba(255, 255, 255, 1);
-  border-color: color-mix(in srgb, var(--card-color) 55%, rgba(255, 255, 255, 0.18));
-  background: color-mix(in srgb, var(--card-color) 22%, rgba(255, 255, 255, 0.08));
+  border-color: color-mix(
+    in srgb,
+    var(--card-color) 55%,
+    rgba(255, 255, 255, 0.18)
+  );
+  background: color-mix(
+    in srgb,
+    var(--card-color) 22%,
+    rgba(255, 255, 255, 0.08)
+  );
 }
 
 /* Mobile tweaks */
@@ -461,5 +488,20 @@
     min-width: unset;
     width: min(92vw, 520px);
   }
+
+  /* ✅ OPTION 1: reserve space for the close button so it never overlaps the title */
+  .sq-service-card.is-expanded .sq-service-card-inner {
+    padding-top: 52px;
+  }
 }
-/* .sq-service-card.is-expanded */
+
+/* ✅ Scrollbaar, maar zonder zichtbare scrollbar */
+.sq-service-card.is-expanded .sq-service-card-inner {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/old Edge */
+}
+
+.sq-service-card.is-expanded .sq-service-card-inner::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
