@@ -108,19 +108,19 @@ const OnzeDiensten: React.FC = () => {
         ].filter(Boolean),
         icon: <Sparkles className="sq-service-icon-svg" aria-hidden="true" />,
       },
-      {
-        n: 6,
-        title: t("services.service6.title"),
-        summary: t("services.service6.summary"),
-        text: t("services.service6.text"),
-        includes: [
-          t("services.service6.list.1"),
-          t("services.service6.list.2"),
-          t("services.service6.list.3"),
-          t("services.service6.list.4"),
-        ].filter(Boolean),
-        icon: <Settings className="sq-service-icon-svg" aria-hidden="true" />,
-      },
+      // {
+      //   n: 6,
+      //   title: t("services.service6.title"),
+      //   summary: t("services.service6.summary"),
+      //   text: t("services.service6.text"),
+      //   includes: [
+      //     t("services.service6.list.1"),
+      //     t("services.service6.list.2"),
+      //     t("services.service6.list.3"),
+      //     t("services.service6.list.4"),
+      //   ].filter(Boolean),
+      //   icon: <Settings className="sq-service-icon-svg" aria-hidden="true" />,
+      // },
       {
         n: 7,
         title: t("services.service7.title"),
