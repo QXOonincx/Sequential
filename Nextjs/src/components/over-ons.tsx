@@ -53,7 +53,7 @@ const AboutSection: React.FC = () => {
   const [hideScrollHint, setHideScrollHint] = useState(false);
 
   // ======================================================
-  // Typewriter (does NOT reset on language switch)
+  // Typewriter
   // ======================================================
   const TYPE_BASE = t("about.tekst.type.writer");
 
@@ -67,10 +67,15 @@ const AboutSection: React.FC = () => {
     [lang, t]
   );
 
+  const LONGEST_ENDING = useMemo(() => {
+    return TYPE_ENDINGS.reduce((longest, current) =>
+      current.length > longest.length ? current : longest,
+    "");
+  }, [TYPE_ENDINGS]);
+
   const [twEnding, setTwEnding] = useState<string>("");
   const [twReduceMotion, setTwReduceMotion] = useState(false);
 
-  // Persist animation state across re-renders AND language switches
   const endingIndexRef = useRef(0);
   const charIndexRef = useRef(0);
   const deletingRef = useRef(false);
@@ -91,7 +96,6 @@ const AboutSection: React.FC = () => {
     return () => mq.removeEventListener?.("change", apply);
   }, []);
 
-  // If reduced motion: show a static ending (current index), no reset
   useEffect(() => {
     if (!twReduceMotion) return;
 
@@ -101,7 +105,6 @@ const AboutSection: React.FC = () => {
     const idx = ((endingIndexRef.current % len) + len) % len;
     const ending = TYPE_ENDINGS[idx] ?? "";
 
-    // Clamp char index to avoid out-of-range when language changes
     charIndexRef.current = Math.min(charIndexRef.current, ending.length);
     setTwEnding(ending);
 
@@ -114,7 +117,7 @@ const AboutSection: React.FC = () => {
 
     let isMounted = true;
 
-    const typeSpeed = 34; // ms per char
+    const typeSpeed = 34;
     const deleteSpeed = 22;
     const pauseAfterType = 1050;
     const pauseAfterDelete = 280;
@@ -126,7 +129,6 @@ const AboutSection: React.FC = () => {
       const idx = ((endingIndexRef.current % len) + len) % len;
       const ending = TYPE_ENDINGS[idx] ?? "";
 
-      // Clamp char index in case the new language string is shorter
       if (charIndexRef.current > ending.length) {
         charIndexRef.current = ending.length;
       }
@@ -147,7 +149,6 @@ const AboutSection: React.FC = () => {
         return;
       }
 
-      // deleting
       charIndexRef.current -= 1;
       setTwEnding(ending.slice(0, Math.max(0, charIndexRef.current)));
 
@@ -162,7 +163,6 @@ const AboutSection: React.FC = () => {
       timeoutRef.current = window.setTimeout(tick, deleteSpeed);
     };
 
-    // IMPORTANT: do NOT reset refs or twEnding here
     clearTimer();
     timeoutRef.current = window.setTimeout(tick, 0);
 
@@ -170,10 +170,8 @@ const AboutSection: React.FC = () => {
       isMounted = false;
       clearTimer();
     };
-    // Re-run when endings change (language switch), but state is preserved via refs
   }, [TYPE_ENDINGS, twReduceMotion]);
 
-  // Keep visible[] length in sync (safe even if cards never changes length)
   useEffect(() => {
     setVisible((prev) => {
       if (prev.length === cards.length) return prev;
@@ -182,7 +180,7 @@ const AboutSection: React.FC = () => {
   }, [cards.length]);
 
   /* ======================================================
-     Scroll reveal for each row (mount once)
+     Scroll reveal for each row
   ====================================================== */
   useEffect(() => {
     let obs: IntersectionObserver | null = null;
@@ -226,7 +224,7 @@ const AboutSection: React.FC = () => {
   }, []);
 
   /* ======================================================
-     Keep scroll cue visible until LAST card is ~fully visible
+     Scroll cue visibility
   ====================================================== */
   useEffect(() => {
     let obs: IntersectionObserver | null = null;
@@ -234,7 +232,6 @@ const AboutSection: React.FC = () => {
     let timer: number | null = null;
 
     const attach = () => {
-      // last existing ref (safe)
       const lastEl =
         [...itemRefs.current].reverse().find((el) => el != null) ?? null;
 
@@ -246,7 +243,6 @@ const AboutSection: React.FC = () => {
 
       obs = new IntersectionObserver(
         ([entry]) => {
-          // Hide only when ~90% visible (use 1 for fully visible)
           setHideScrollHint(entry.intersectionRatio >= 0.9);
         },
         {
@@ -281,8 +277,13 @@ const AboutSection: React.FC = () => {
         <main>
           <section className="sq-section sq-about-page">
             <div className="sq-container">
-              {/* ===== TYPEWRITER HEADLINE ===== */}
               <div className="sq-about-typewriterWrap">
+                <p className="sq-about-typewriterSizer" aria-hidden="true">
+                  <span className="sq-about-typewriter-base">{TYPE_BASE} </span>
+                  <span className="sq-about-typewriter-ending">{LONGEST_ENDING}</span>
+                  <span className="sq-about-caret" />
+                </p>
+
                 <p className="sq-about-typewriter" aria-live="polite">
                   <span className="sq-about-typewriter-base">{TYPE_BASE} </span>
                   <span className="sq-about-typewriter-ending">{twEnding}</span>
@@ -290,13 +291,11 @@ const AboutSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* ===== INTRO ===== */}
               <header className="sq-about-hero">
                 <h2 className="sq-about-h2">{t("about.title")}</h2>
                 <p className="sq-about-lead">{t("about.text")}</p>
               </header>
 
-              {/* ===== STACK ===== */}
               <div className="sq-about-stack">
                 {cards.map((c, i) => (
                   <div
@@ -345,7 +344,6 @@ const AboutSection: React.FC = () => {
               </div>
             </div>
 
-            {/* ===== SCROLL CUE ===== */}
             <div className={["sq-scrollCue", hideScrollHint ? "is-hidden" : ""].join(" ")}>
               <button
                 className="sq-scrollCue-btn"
