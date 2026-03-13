@@ -70,12 +70,12 @@ const HomePage: React.FC = () => {
         summaryKey: "services.service5.summary",
         icon: <Sparkles size={18} aria-hidden="true" />,
       },
-      {
-        key: "service6",
-        titleKey: "services.service6.title",
-        summaryKey: "services.service6.summary",
-        icon: <Settings size={18} aria-hidden="true" />,
-      },
+      // {
+      //   key: "service6",
+      //   titleKey: "services.service6.title",
+      //   summaryKey: "services.service6.summary",
+      //   icon: <Settings size={18} aria-hidden="true" />,
+      // },
       {
         key: "service7",
         titleKey: "services.service7.title",

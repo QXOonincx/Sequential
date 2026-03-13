@@ -1,0 +1,26 @@
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML — short cache so changes show up quickly
+  ExpiresByType text/html "access plus 1 hour"
+
+  # CSS & JavaScript (safe to cache long because of hashed filenames)
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
+  ExpiresByType text/javascript "access plus 1 hour"
+
+  # Images
+  ExpiresByType image/png "access plus 1 hour"
+  ExpiresByType image/jpeg "access plus 1 hour"
+  ExpiresByType image/webp "access plus 1 hour"
+  ExpiresByType image/svg+xml "access plus 1 hour"
+  ExpiresByType image/x-icon "access plus 1 hour"
+
+  # Fonts (if you ever add them)
+  ExpiresByType font/woff2 "access plus 1 hour"
+  ExpiresByType font/woff "access plus 1 hour"
+  ExpiresByType application/font-woff2 "access plus 1 hour"
+
+  # Make sure PNG is served correctly
+  AddType image/png .png
+</IfModule>
