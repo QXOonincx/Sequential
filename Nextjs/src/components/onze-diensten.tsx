@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "@/styles/index.css";
 import "@/styles/dots.css";

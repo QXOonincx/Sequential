@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "@/styles/index.css";
 import "@/styles/dots.css";
@@ -52,6 +53,9 @@ const AboutSection: React.FC = () => {
   const [visible, setVisible] = useState<boolean[]>(() => cards.map(() => false));
   const [hideScrollHint, setHideScrollHint] = useState(false);
 
+  // NEW: popup state
+  const [aboutPopupOpen, setAboutPopupOpen] = useState(false);
+
   // ======================================================
   // Typewriter
   // ======================================================
@@ -68,9 +72,10 @@ const AboutSection: React.FC = () => {
   );
 
   const LONGEST_ENDING = useMemo(() => {
-    return TYPE_ENDINGS.reduce((longest, current) =>
-      current.length > longest.length ? current : longest,
-    "");
+    return TYPE_ENDINGS.reduce(
+      (longest, current) => (current.length > longest.length ? current : longest),
+      ""
+    );
   }, [TYPE_ENDINGS]);
 
   const [twEnding, setTwEnding] = useState<string>("");
@@ -262,6 +267,24 @@ const AboutSection: React.FC = () => {
     };
   }, []);
 
+  // NEW: close popup with Escape + lock background scroll
+  useEffect(() => {
+    if (!aboutPopupOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setAboutPopupOpen(false);
+    };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [aboutPopupOpen]);
+
   const scrollDownOne = () => {
     window.scrollBy({
       top: Math.round(window.innerHeight * 0.75),
@@ -342,23 +365,191 @@ const AboutSection: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div className={["sq-scrollCue", hideScrollHint ? "is-hidden" : ""].join(" ")}>
-              <button
-                className="sq-scrollCue-btn"
-                type="button"
-                onClick={scrollDownOne}
-                aria-label="Scroll naar beneden"
+              {/* NEW: person image + button at the bottom of the page */}
+              <div
+                style={{
+                  marginTop: "120px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                <span className="sq-scrollCue-text">{t("about.scroll.tekst")}</span>
-                <span className="sq-scrollCue-icon" aria-hidden="true">
-                  <ChevronDown size={18} />
-                </span>
-              </button>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "80px",
+                    textAlign: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+
+                  {/* Profile 1 */}
+                  <div
+                    style={{
+                      width: "260px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p style={{ marginBottom: "12px", fontWeight: 600 }}>
+                      Co-Founder & Developer
+                    </p>
+
+                    <Image
+                      src="/sina.png"
+                      alt="Sina"
+                      width={260}
+                      height={260}
+                      style={{
+                        width: "260px",
+                        height: "260px",
+                        objectFit: "cover",
+                        borderRadius: "9999px",
+                        marginBottom: "28px",
+                        boxShadow: "0 18px 50px rgba(0,0,0,0.18)",
+                      }}
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setAboutPopupOpen(true)}
+                      style={{
+                        border: "none",
+                        borderRadius: "9999px",
+                        padding: "14px 28px",
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        color: "#fff",
+                        background:
+                          "linear-gradient(135deg, rgb(147 109 255), rgb(96 140 255))",
+                        boxShadow: "0 12px 30px rgba(96, 140, 255, 0.28)",
+                      }}
+                    >
+                      Leer mij beter kennen
+                    </button>
+                  </div>
+
+                  {/* Profile 2 */}
+                  <div
+                    style={{
+                      width: "260px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p style={{ marginBottom: "12px", fontWeight: 600 }}>
+                      Co-Founder & Developer
+                    </p>
+
+                    <Image
+                      src="/sina.png"
+                      alt="Sina"
+                      width={260}
+                      height={260}
+                      style={{
+                        width: "260px",
+                        height: "260px",
+                        objectFit: "cover",
+                        borderRadius: "9999px",
+                        marginBottom: "28px",
+                        boxShadow: "0 18px 50px rgba(0,0,0,0.18)",
+                      }}
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setAboutPopupOpen(true)}
+                      style={{
+                        border: "none",
+                        borderRadius: "9999px",
+                        padding: "14px 28px",
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        color: "#fff",
+                        background:
+                          "linear-gradient(135deg, rgb(147 109 255), rgb(96 140 255))",
+                        boxShadow: "0 12px 30px rgba(96, 140, 255, 0.28)",
+                      }}
+                    >
+                      Leer mij beter kennen
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* SCROLL BUTTON */}
+              <div className={["sq-scrollCue", hideScrollHint ? "is-hidden" : ""].join(" ")}>
+                <button
+                  className="sq-scrollCue-btn"
+                  type="button"
+                  onClick={scrollDownOne}
+                  aria-label="Scroll naar beneden"
+                >
+                  <span className="sq-scrollCue-text">{t("about.scroll.tekst")}</span>
+                  <span className="sq-scrollCue-icon" aria-hidden="true">
+                    <ChevronDown size={18} />
+                  </span>
+                </button>
+              </div>
+
             </div>
           </section>
         </main>
+
+        {/* POPUP */}
+        {aboutPopupOpen && (
+          <div
+            onMouseDown={(e) => {
+              if (e.target === e.currentTarget) setAboutPopupOpen(false);
+            }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 3000,
+              background: "rgba(8, 10, 20, 0.62)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                maxWidth: "720px",
+                background: "white",
+                borderRadius: "24px",
+                padding: "32px",
+                boxShadow: "0 30px 90px rgba(0,0,0,0.28)",
+              }}
+            >
+              <h3>Over mij</h3>
+              <p>
+                Hier kun je tekst plaatsen om iets over de persoon te vertellen.
+              </p>
+
+              <button
+                onClick={() => setAboutPopupOpen(false)}
+                style={{
+                  marginTop: "24px",
+                  padding: "12px 22px",
+                  borderRadius: "9999px",
+                  border: "none",
+                  background: "#111827",
+                  color: "white",
+                }}
+              >
+                Sluiten
+              </button>
+            </div>
+          </div>
+        )}
 
         <footer className="sq-footer">
           <div className="sq-container sq-footer-inner">
@@ -370,5 +561,6 @@ const AboutSection: React.FC = () => {
     </>
   );
 };
+
 
 export default AboutSection;
