@@ -446,8 +446,8 @@ const AboutSection: React.FC = () => {
                     </p>
 
                     <Image
-                      src="/sina.png"
-                      alt="Sina"
+                      src="/quinten.png"
+                      alt="Quinten"
                       width={260}
                       height={260}
                       style={{
