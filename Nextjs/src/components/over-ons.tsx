@@ -15,6 +15,8 @@ type AboutCard = {
   icon: React.ReactNode;
 };
 
+type PersonKey = "sina" | "quinten";
+
 const AboutSection: React.FC = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage ?? i18n.language;
@@ -53,8 +55,8 @@ const AboutSection: React.FC = () => {
   const [visible, setVisible] = useState<boolean[]>(() => cards.map(() => false));
   const [hideScrollHint, setHideScrollHint] = useState(false);
 
-  // NEW: popup state
-  const [aboutPopupOpen, setAboutPopupOpen] = useState(false);
+  // UPDATED: popup state per person
+  const [activePopup, setActivePopup] = useState<PersonKey | null>(null);
 
   // ======================================================
   // Typewriter
@@ -267,12 +269,12 @@ const AboutSection: React.FC = () => {
     };
   }, []);
 
-  // NEW: close popup with Escape + lock background scroll
+  // UPDATED: close popup with Escape + lock background scroll
   useEffect(() => {
-    if (!aboutPopupOpen) return;
+    if (!activePopup) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setAboutPopupOpen(false);
+      if (e.key === "Escape") setActivePopup(null);
     };
 
     const prevOverflow = document.body.style.overflow;
@@ -283,7 +285,7 @@ const AboutSection: React.FC = () => {
       document.body.style.overflow = prevOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [aboutPopupOpen]);
+  }, [activePopup]);
 
   const scrollDownOne = () => {
     window.scrollBy({
@@ -291,6 +293,46 @@ const AboutSection: React.FC = () => {
       behavior: "smooth",
     });
   };
+
+  const popupContent = {
+    sina: {
+      title: "Over mij",
+      text: (
+        <>
+          Ik ben Sina Hashemy, mede-oprichter van Sequential.
+          <br />
+          <br />
+          Ik studeer Informatica (2e jaars) en pas mijn kennis dagelijks toe in
+          het bouwen van moderne, snelle websites. Binnen ons bedrijf richt ik
+          mij op de technische ontwikkeling en het creëren van
+          gebruiksvriendelijke oplossingen.
+          <br />
+          <br />
+          Samen met mijn compagnon zijn we een jong en gedreven team, waarbij ik
+          mij naast de technische ontwikkeling ook bezighoud met het aantrekken
+          van nieuwe klanten.
+        </>
+      ),
+    },
+    quinten: {
+      title: "Over mij",
+      text: (
+        <>
+          Ik ben Quinten, mede-oprichter van Sequential.
+          <br />
+          <br />
+          Ik ben 18 jaar oud en studeer Informatica aan de Hogeschool Rotterdam
+          (2de jaar). Binnen Sequential richt ik mij op de technische kant van
+          het bedrijf en maak ik de websites.
+          <br />
+          <br />
+          Samen met mijn compagnon vormen we een jong en gedreven team, waarbij
+          we bedrijven helpen met moderne en gebruiksvriendelijke online
+          oplossingen.
+        </>
+      ),
+    },
+  } as const;
 
   return (
     <>
@@ -366,7 +408,6 @@ const AboutSection: React.FC = () => {
                 ))}
               </div>
 
-              {/* NEW: person image + button at the bottom of the page */}
               <div
                 style={{
                   marginTop: "120px",
@@ -383,7 +424,6 @@ const AboutSection: React.FC = () => {
                     flexWrap: "wrap",
                   }}
                 >
-
                   {/* Profile 1 */}
                   <div
                     style={{
@@ -414,7 +454,7 @@ const AboutSection: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => setAboutPopupOpen(true)}
+                      onClick={() => setActivePopup("sina")}
                       style={{
                         border: "none",
                         borderRadius: "9999px",
@@ -462,7 +502,7 @@ const AboutSection: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => setAboutPopupOpen(true)}
+                      onClick={() => setActivePopup("quinten")}
                       style={{
                         border: "none",
                         borderRadius: "9999px",
@@ -479,7 +519,6 @@ const AboutSection: React.FC = () => {
                       Leer mij beter kennen
                     </button>
                   </div>
-
                 </div>
               </div>
 
@@ -497,16 +536,15 @@ const AboutSection: React.FC = () => {
                   </span>
                 </button>
               </div>
-
             </div>
           </section>
         </main>
 
         {/* POPUP */}
-        {aboutPopupOpen && (
+        {activePopup && (
           <div
             onMouseDown={(e) => {
-              if (e.target === e.currentTarget) setAboutPopupOpen(false);
+              if (e.target === e.currentTarget) setActivePopup(null);
             }}
             style={{
               position: "fixed",
@@ -529,15 +567,11 @@ const AboutSection: React.FC = () => {
                 boxShadow: "0 30px 90px rgba(0,0,0,0.28)",
               }}
             >
-              <h3>Over mij</h3>
-              <p>
-                Ik ben Sina Hashemy, mede-oprichter van Sequential.<br /><br />
-                Ik studeer Informatica (2e jaars) en pas mijn kennis dagelijks toe in het bouwen van moderne, snelle websites. Binnen ons bedrijf richt ik mij op de technische ontwikkeling en het creëren van gebruiksvriendelijke oplossingen.<br /><br />
-                Samen met mijn compagnon zijn we een jong en gedreven team, waarbij ik mij naast de technische ontwikkeling ook bezighoud met het aantrekken van nieuwe klanten.
-              </p>
+              <h3>{popupContent[activePopup].title}</h3>
+              <p>{popupContent[activePopup].text}</p>
 
               <button
-                onClick={() => setAboutPopupOpen(false)}
+                onClick={() => setActivePopup(null)}
                 style={{
                   marginTop: "24px",
                   padding: "12px 22px",
@@ -563,6 +597,5 @@ const AboutSection: React.FC = () => {
     </>
   );
 };
-
 
 export default AboutSection;
