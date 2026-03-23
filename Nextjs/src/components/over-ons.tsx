@@ -523,7 +523,7 @@ const AboutSection: React.FC = () => {
               style={{
                 width: "100%",
                 maxWidth: "720px",
-                background: "white",
+                background: "black",
                 borderRadius: "24px",
                 padding: "32px",
                 boxShadow: "0 30px 90px rgba(0,0,0,0.28)",
@@ -531,7 +531,9 @@ const AboutSection: React.FC = () => {
             >
               <h3>Over mij</h3>
               <p>
-                Hier kun je tekst plaatsen om iets over de persoon te vertellen.
+                Ik ben Sina Hashemy, mede-oprichter van Sequential.<br /><br />
+                Ik studeer Informatica (2e jaars) en pas mijn kennis dagelijks toe in het bouwen van moderne, snelle websites. Binnen ons bedrijf richt ik mij op de technische ontwikkeling en het creëren van gebruiksvriendelijke oplossingen.<br /><br />
+                Samen met mijn compagnon zijn we een jong en gedreven team, waarbij ik mij naast de technische ontwikkeling ook bezighoud met het aantrekken van nieuwe klanten.
               </p>
 
               <button
